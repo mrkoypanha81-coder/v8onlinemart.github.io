@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    font-family: 'Kantumruy Pro', 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #f8fafc;
+    color: #0f172a;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html.dark, html.dark body {
+    background-color: #020617;
+    color: #f8fafc;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  #root {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(-100%);
+    opacity: 0.5;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-right {
+  animation: slideRight 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Glassmorphism */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-dark {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* KHQR Card background gradient */
+.khqr-gradient {
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 50%, #9f1239 100%);
+}
+
+.hero-gradient {
+  background: linear-gradient(135deg, #ea580c 0%, #f97316 40%, #fb923c 100%);
+}
+
+/* ========================================================================== */
+/* FONT SIZE SCALING SYSTEM (EXPLICITLY ISOLATED FROM TOP NAVIGATION HEADER) */
+/* ========================================================================== */
+
+/* 1. Strictly Protect Header & Navigation from any font size scaling */
+header,
+header *,
+.app-header-fixed,
+.app-header-fixed * {
+  font-size: initial;
+}
+
+header {
+  font-size: 16px !important;
+}
+
+header .text-xs { font-size: 0.75rem !important; }
+header .text-sm { font-size: 0.875rem !important; }
+header .text-base { font-size: 1rem !important; }
+header .text-lg { font-size: 1.125rem !important; }
+header .text-xl { font-size: 1.25rem !important; }
+header .text-2xl { font-size: 1.5rem !important; }
+
+/* 2. Scalable Content Typography for Main Storefront & Admin Tables */
+[data-font-size="small"] .content-scalable {
+  font-size: 0.88rem;
+}
+[data-font-size="small"] .content-scalable .product-title,
+[data-font-size="small"] .content-scalable h1,
+[data-font-size="small"] .content-scalable h2,
+[data-font-size="small"] .content-scalable h3,
+[data-font-size="small"] .content-scalable p,
+[data-font-size="small"] .content-scalable span:not(.no-scale) {
+  font-size: 0.9em;
+}
+
+[data-font-size="large"] .content-scalable {
+  font-size: 1.05rem;
+}
+[data-font-size="large"] .content-scalable .product-title,
+[data-font-size="large"] .content-scalable h1,
+[data-font-size="large"] .content-scalable h2,
+[data-font-size="large"] .content-scalable h3,
+[data-font-size="large"] .content-scalable p,
+[data-font-size="large"] .content-scalable span:not(.no-scale) {
+  font-size: 1.05em;
+}
+
+[data-font-size="xlarge"] .content-scalable {
+  font-size: 1.15rem;
+}
+[data-font-size="xlarge"] .content-scalable .product-title,
+[data-font-size="xlarge"] .content-scalable h1,
+[data-font-size="xlarge"] .content-scalable h2,
+[data-font-size="xlarge"] .content-scalable h3,
+[data-font-size="xlarge"] .content-scalable p,
+[data-font-size="xlarge"] .content-scalable span:not(.no-scale) {
+  font-size: 1.15em;
+}
+
