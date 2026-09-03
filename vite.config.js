@@ -175,15 +175,15 @@ function sharedDataStorePlugin() {
   };
 }
 
-export default defineConfig({
-  base: '/v8onlinemart.github.io/',
+export default defineConfig(({ mode }) => ({
+  base: mode === 'production' ? '/v8onlinemart.github.io/' : '/',
   plugins: [react(), imageUploadPlugin(), sharedDataStorePlugin()],
   server: {
     host: true, // Exposes server to local network (0.0.0.0) for phone access
     port: 3000,
     open: true
   }
-});
+}));
 
 
 

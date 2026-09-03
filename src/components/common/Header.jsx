@@ -236,18 +236,18 @@ export const Header = () => {
               <Menu className="w-6 h-6 stroke-[2.2] text-emerald-700 dark:text-emerald-300 group-hover:scale-105 transition-transform" />
             </button>
 
-            {/* Official Logo Box + Text "MINI MART" */}
+            {/* Official Logo Box + Text "ONLINE MART" */}
             <div 
               onClick={() => setViewMode('store')}
               className="flex items-center space-x-3 cursor-pointer group select-none"
             >
               <div className="w-12 h-12 rounded-2xl overflow-hidden shadow-md border border-emerald-600/30 group-hover:scale-105 transition transform bg-white flex items-center justify-center p-0.5">
-                <img src={v8Logo} alt="V8 Logo" className="w-full h-full object-contain" />
+                <img src={v8Logo} alt="V8 Online Mart" className="w-full h-full object-contain" />
               </div>
               <div>
                 <div className="flex items-center space-x-1.5">
                   <span className="font-black text-2xl tracking-tight text-slate-900 dark:text-white leading-none">
-                    Mini <span className="text-emerald-700 dark:text-emerald-500">Mart</span>
+                    Online <span className="text-emerald-700 dark:text-emerald-500">Mart</span>
                   </span>
                 </div>
                 <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold mt-1">
@@ -426,17 +426,17 @@ export const Header = () => {
                 <Menu className="w-5 h-5 stroke-[2.2] text-emerald-700 dark:text-emerald-300" />
               </button>
 
-              {/* Logo with Official Icon + MINI MART text */}
+              {/* Logo with Official Icon + ONLINE MART text */}
               <div 
                 onClick={() => setViewMode('store')}
                 className="flex items-center space-x-2 cursor-pointer select-none"
               >
                 <div className="w-10 h-10 rounded-xl overflow-hidden shadow-xs border border-emerald-600/30 bg-white flex items-center justify-center p-0.5 flex-shrink-0">
-                  <img src={v8Logo} alt="V8 Mini Mart" className="w-full h-full object-contain" />
+                  <img src={v8Logo} alt="V8 Online Mart" className="w-full h-full object-contain" />
                 </div>
                 <div className="flex items-center space-x-1">
                   <span className="font-black text-lg tracking-tight text-slate-900 dark:text-white leading-none">
-                    Mini <span className="text-emerald-700 dark:text-emerald-500">Mart</span>
+                    Online <span className="text-emerald-700 dark:text-emerald-500">Mart</span>
                   </span>
                 </div>
               </div>

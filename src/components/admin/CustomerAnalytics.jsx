@@ -8,7 +8,7 @@ import {
   Clock, Eye, ExternalLink, RefreshCw, X, TrendingUp, 
   CheckCircle, Package, ArrowUpRight, UserCheck, ShieldCheck, Mail, Navigation,
   Wallet, PlusCircle, MinusCircle, CreditCard, Activity, Smartphone, Globe,
-  FileText, Save, Printer, ArrowDownCircle, Info, ChevronDown, KeyRound, Lock, Copy, Check, Send
+  FileText, Save, Printer, ArrowDownCircle, Info, ChevronDown, KeyRound, Lock, Copy, Check, Send, Trash2
 } from 'lucide-react';
 
 export const CustomerAnalytics = () => {
@@ -17,6 +17,7 @@ export const CustomerAnalytics = () => {
     registeredCustomers = [], 
     walletTransactions = [],
     customerProfile,
+    deleteCustomer,
     adminTopUpCustomerWallet,
     adminWithdrawCustomerWallet,
     adminSetCustomerTier,
@@ -55,6 +56,9 @@ export const CustomerAnalytics = () => {
   const [adminNewPass, setAdminNewPass] = useState('1234');
   const [showAdminPass, setShowAdminPass] = useState(false);
   const [isCopiedPass, setIsCopiedPass] = useState(false);
+
+  // Delete Customer Confirmation Modal State
+  const [deleteConfirmCustomer, setDeleteConfirmCustomer] = useState(null);
 
   // 1. Customer Auto-Tiering & Manual Override Calculator
   // VIP: Total Spend >= $100 OR Orders >= 4 OR Wallet Balance >= $50 OR custom_tier === 'vip'
@@ -836,6 +840,19 @@ export const CustomerAnalytics = () => {
                       <KeyRound className="w-3.5 h-3.5" />
                     </button>
 
+                    {/* Delete Customer Account Button */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setDeleteConfirmCustomer(c);
+                      }}
+                      className="p-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800 text-xs font-bold flex items-center transition cursor-pointer"
+                      title={lang === 'km' ? 'លុបគណនីអតិថិជន (Delete Account)' : 'Delete Customer Account'}
+                    >
+                      <Trash2 className="w-3.5 h-3.5 text-rose-600" />
+                    </button>
+
                     {c.phone && c.phone !== 'N/A' && (
                       <>
                         <a
@@ -1102,6 +1119,17 @@ export const CustomerAnalytics = () => {
                             title={lang === 'km' ? 'Reset លេខសម្ងាត់ Password' : 'Reset Password'}
                           >
                             <KeyRound className="w-3.5 h-3.5" />
+                          </button>
+
+                          {/* Delete Customer Account Button */}
+                          <button
+                            onClick={() => {
+                              setDeleteConfirmCustomer(c);
+                            }}
+                            className="p-2 bg-rose-50 hover:bg-rose-100 dark:bg-rose-950/60 dark:hover:bg-rose-900 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800 rounded-xl text-xs font-bold flex items-center transition cursor-pointer"
+                            title={lang === 'km' ? 'លុបគណនីអតិថិជន (Delete Account)' : 'Delete Customer Account'}
+                          >
+                            <Trash2 className="w-3.5 h-3.5 text-rose-600" />
                           </button>
 
                           {/* Tracking Detail View Button */}
@@ -2180,6 +2208,91 @@ export const CustomerAnalytics = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* 5. DELETE CUSTOMER ACCOUNT CONFIRMATION MODAL */}
+      {deleteConfirmCustomer && (
+        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in font-sans">
+          <div className="bg-white dark:bg-slate-900 w-full max-w-md rounded-3xl shadow-2xl border border-rose-200 dark:border-rose-900/60 p-6 space-y-4 relative overflow-hidden">
+            {/* Ambient Red Glow */}
+            <div className="absolute -top-10 -right-10 w-32 h-32 bg-rose-500/10 rounded-full blur-2xl pointer-events-none" />
+
+            <div className="flex items-start justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="p-3 bg-rose-100 dark:bg-rose-950/80 text-rose-600 rounded-2xl border border-rose-200 dark:border-rose-800">
+                  <Trash2 className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="font-black text-lg text-slate-900 dark:text-white">
+                    {lang === 'km' ? '🗑️ លុបគណនីអតិថិជន' : 'Delete Customer Account'}
+                  </h3>
+                  <p className="text-xs text-rose-600 dark:text-rose-400 font-bold">
+                    {lang === 'km' ? 'សកម្មភាពនេះមិនអាចត្រឡប់ក្រោយបានទេ' : 'This action cannot be undone'}
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setDeleteConfirmCustomer(null)}
+                className="p-1.5 text-slate-400 hover:text-slate-700 dark:hover:text-white rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Target Account Details */}
+            <div className="p-4 bg-slate-50 dark:bg-slate-850 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-1">
+              <span className="text-xs text-slate-500 font-bold block">
+                {lang === 'km' ? 'ព័ត៌មានគណនីដែលត្រូវលុប៖' : 'Target Account Details:'}
+              </span>
+              <p className="font-black text-sm text-slate-900 dark:text-white">
+                {deleteConfirmCustomer.name}
+              </p>
+              <p className="font-mono text-xs font-bold text-slate-600 dark:text-slate-400">
+                📱 លេខទូរស័ព្ទ៖ {deleteConfirmCustomer.phone || deleteConfirmCustomer.id}
+              </p>
+            </div>
+
+            <div className="p-3 bg-amber-50/80 dark:bg-amber-950/40 rounded-xl border border-amber-200 dark:border-amber-800/60 text-xs text-amber-900 dark:text-amber-300 space-y-1">
+              <p className="font-bold flex items-center space-x-1">
+                <Info className="w-4 h-4 text-amber-600 flex-shrink-0" />
+                <span>{lang === 'km' ? 'គោលបំណងលុបគណនី៖' : 'Account Re-registration Purpose:'}</span>
+              </p>
+              <p className="opacity-90">
+                {lang === 'km'
+                  ? 'បន្ទាប់ពីលុបចេញរួច អតិថិជននឹងអាចចុះឈ្មោះ (Register) បង្កើតគណនីថ្មីឡើងវិញដោយប្រើលេខទូរស័ព្ទនេះបានដោយជោគជ័យ។'
+                  : 'After deletion, the customer will be able to re-register a new account using this phone number.'}
+              </p>
+            </div>
+
+            {/* Actions */}
+            <div className="pt-2 flex items-center justify-end space-x-2.5">
+              <button
+                type="button"
+                onClick={() => setDeleteConfirmCustomer(null)}
+                className="py-2.5 px-4 rounded-2xl border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+              >
+                {lang === 'km' ? 'បោះបង់' : 'Cancel'}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  deleteCustomer(deleteConfirmCustomer.phone || deleteConfirmCustomer.id);
+                  setDeleteConfirmCustomer(null);
+                  if (selectedCustomer && selectedCustomer.id === deleteConfirmCustomer.id) {
+                    setSelectedCustomer(null);
+                  }
+                }}
+                className="py-2.5 px-5 bg-rose-600 hover:bg-rose-700 active:scale-95 text-white rounded-2xl font-black text-xs shadow-md shadow-rose-600/30 transition flex items-center space-x-1.5 cursor-pointer"
+              >
+                <Trash2 className="w-4 h-4" />
+                <span>{lang === 'km' ? '🗑️ លុបគណនីនេះភ្លាមៗ' : 'Confirm Delete Account'}</span>
+              </button>
+            </div>
           </div>
         </div>
       )}

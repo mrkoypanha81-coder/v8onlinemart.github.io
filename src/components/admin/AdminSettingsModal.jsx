@@ -3,8 +3,9 @@ import { useStore } from '../../context/StoreContext';
 import { 
   Settings, X, Type, Moon, Sun, Globe, DollarSign, 
   Store, Shield, Bell, Check, Sparkles, Sliders, RefreshCw, 
-  Lock, Smartphone, Info
+  Lock, Smartphone, Info, Volume2, VolumeX
 } from 'lucide-react';
+import { playTestRingtone } from '../../utils/soundEffects';
 
 export const AdminSettingsModal = ({ isOpen, onClose }) => {
   const { 
@@ -20,7 +21,9 @@ export const AdminSettingsModal = ({ isOpen, onClose }) => {
     showToast,
     smsSettings,
     updateSmsSettings,
-    sendSmsNotification
+    sendSmsNotification,
+    orderAudioEnabled,
+    toggleOrderAudioAlert
   } = useStore();
 
   const [testPhone, setTestPhone] = useState('');
@@ -335,6 +338,60 @@ export const AdminSettingsModal = ({ isOpen, onClose }) => {
               <span className="font-black font-mono text-emerald-600 dark:text-emerald-400">
                 1 USD = {exchangeRate?.toLocaleString() || '4,000'} KHR
               </span>
+            </div>
+          </div>
+
+          {/* SECTION 3.2: ORDER RINGTONE AUDIO NOTIFICATION */}
+          <div className="p-4 sm:p-5 bg-slate-50 dark:bg-slate-850 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Volume2 className="w-5 h-5 text-emerald-500" />
+                <div>
+                  <h4 className="font-black text-slate-900 dark:text-white">
+                    {lang === 'km' ? '🔔 សំឡេងកណ្ដឹងជូនដំណឹងការបញ្ជាទិញ (Order Ringtone Sound)' : 'Order Ringtone Sound Alert'}
+                  </h4>
+                  <p className="text-xs text-slate-500">
+                    {lang === 'km' ? 'បន្លឺសំឡេងកណ្ដឹង POS (Ring Tone Chime) ភ្លាមៗនៅពេលមានអតិថិជនកុម្ម៉ង់ទំនិញ' : 'Play POS chime audio ringtone automatically when a customer places an order'}
+                  </p>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={toggleOrderAudioAlert}
+                className={`px-4 py-2 rounded-2xl font-black text-xs transition cursor-pointer flex items-center space-x-1.5 ${
+                  orderAudioEnabled 
+                    ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20' 
+                    : 'bg-slate-200 dark:bg-slate-800 text-slate-500'
+                }`}
+              >
+                {orderAudioEnabled ? (
+                  <>
+                    <Volume2 className="w-4 h-4" />
+                    <span>{lang === 'km' ? '🔊 បើកសំឡេង (ON)' : '🔊 Enabled'}</span>
+                  </>
+                ) : (
+                  <>
+                    <VolumeX className="w-4 h-4" />
+                    <span>{lang === 'km' ? '🔇 បិទសំឡេង (OFF)' : '🔇 Muted'}</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* Test Sound Button */}
+            <div className="flex items-center justify-between p-3 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800">
+              <span className="font-bold text-slate-700 dark:text-slate-300">
+                {lang === 'km' ? 'ធ្វើតេស្តសំឡេងកណ្ដឹង POS Ringtone:' : 'Test POS Chime Sound:'}
+              </span>
+              <button
+                type="button"
+                onClick={playTestRingtone}
+                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white rounded-xl font-black text-xs transition flex items-center space-x-1.5 cursor-pointer shadow-xs"
+              >
+                <Bell className="w-3.5 h-3.5" />
+                <span>{lang === 'km' ? '🔔 ធ្វើតេស្តសំឡេង (Test Sound)' : '🔔 Test Sound'}</span>
+              </button>
             </div>
           </div>
 

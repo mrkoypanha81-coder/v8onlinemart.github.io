@@ -3,7 +3,7 @@
 export const translations = {
   km: {
     // Header & Nav
-    storeName: 'V8 Mini Mart',
+    storeName: 'V8 Online Mart',
     tagline: 'ផ្សារទំនើបអនឡាញទាន់ចិត្ត & ស្តង់ដារខ្ពស់',
     searchPlaceholder: 'ស្វែងរកទំនិញ ភេសជ្ជៈ នំចំណី គ្រឿងទេស...',
     allCategories: 'គ្រប់ប្រភេទ',
@@ -66,14 +66,14 @@ export const translations = {
     simulatePaid: '✅ ក្លែងធ្វើការស្កេនទូទាត់ជោគជ័យ (Simulate Pay)',
     confirmOrder: 'បញ្ជាក់ការបញ្ជាទិញ',
     orderSuccess: 'ការបញ្ជាទិញជោគជ័យ!',
-    orderSuccessDesc: 'អរគុណសម្រាប់ការទិញទំនិញនៅ V8 Mini Mart! យើងកំពុងរៀបចំទំនិញសម្រាប់ដឹកជញ្ជូនជូនលោកអ្នក។',
+    orderSuccessDesc: 'អរគុណសម្រាប់ការទិញទំនិញនៅ V8 Online Mart! យើងកំពុងរៀបចំទំនិញសម្រាប់ដឹកជញ្ជូនជូនលោកអ្នក។',
     orderId: 'លេខសម្គាល់ការបញ្ជាទិញ',
     orderDate: 'កាលបរិច្ឆេទបញ្ជាទិញ',
     printInvoice: 'បោះពុម្ពវិក្កយបត្រ',
     continueShopping: 'បន្តការទិញទំនិញទៀត',
 
     // Admin Dashboard
-    adminTitle: 'ប្រព័ន្ធគ្រប់គ្រង V8 Mini Mart',
+    adminTitle: 'ប្រព័ន្ធគ្រប់គ្រង V8 Online Mart',
     merchantCenter: 'Merchant & Inventory Portal',
     navDashboard: 'ផ្ទាំងសង្ខេប (Overview)',
     navInventory: 'គ្រប់គ្រងស្តុក & ទំនិញ',
@@ -114,7 +114,7 @@ export const translations = {
 
   en: {
     // Header & Nav
-    storeName: 'V8 Mini Mart',
+    storeName: 'V8 Online Mart',
     tagline: 'Smart Online Convenience & Inventory System',
     searchPlaceholder: 'Search products, drinks, snacks, groceries...',
     allCategories: 'All Categories',
@@ -177,14 +177,14 @@ export const translations = {
     simulatePaid: '✅ Simulate Successful Scan & Pay',
     confirmOrder: 'Place Order',
     orderSuccess: 'Order Placed Successfully!',
-    orderSuccessDesc: 'Thank you for shopping with V8 Mini Mart! We are preparing your order for immediate dispatch.',
+    orderSuccessDesc: 'Thank you for shopping with V8 Online Mart! We are preparing your order for immediate dispatch.',
     orderId: 'Order ID',
     orderDate: 'Order Date',
     printInvoice: 'Print Invoice',
     continueShopping: 'Continue Shopping',
 
     // Admin Dashboard
-    adminTitle: 'V8 Mini Mart Management',
+    adminTitle: 'V8 Online Mart Management',
     merchantCenter: 'Merchant & Inventory Portal',
     navDashboard: 'Overview',
     navInventory: 'Products & Inventory',

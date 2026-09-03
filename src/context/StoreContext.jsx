@@ -1,6 +1,13 @@
 import React, { createContext, useContext, useState, useEffect, useRef, useCallback } from 'react';
 import { INITIAL_PRODUCTS, INITIAL_CATEGORIES, INITIAL_ORDERS, INITIAL_BANNERS, INITIAL_WALLET_TRANSACTIONS, INITIAL_REGISTERED_CUSTOMERS } from '../data/initialData';
 import { translations } from '../data/translations';
+import { 
+  playNewOrderRingtone, 
+  playStockAlertRingtone, 
+  playDeliveryRingtone, 
+  playCustomerAlertRingtone, 
+  playNotificationSound 
+} from '../utils/soundEffects';
 
 const StoreContext = createContext(null);
 
@@ -256,6 +263,42 @@ export const StoreProvider = ({ children }) => {
     };
   });
 
+  // Enterprise Stock Ledger & Price History States
+  const [stockMovements, setStockMovements] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('v8_stock_movements');
+      if (saved) {
+        try { return JSON.parse(saved); } catch (e) {}
+      }
+    }
+    return [
+      {
+        id: 'LOG-1001',
+        product_id: 'PRD-001',
+        product_title: 'ទឹកសុទ្ធ កម្ពុជា 500ml',
+        sku: 'V8-BEV-003',
+        type: 'IN',
+        qty: 50,
+        previous_stock: 0,
+        new_stock: 50,
+        reason: '🛍️ ទិញចូលពីអ្នកផ្គត់ផ្គង់ (Initial Purchase)',
+        ref_no: 'PO-2026-089',
+        staff_name: 'Mart Manager (Super Admin)',
+        timestamp: new Date().toISOString()
+      }
+    ];
+  });
+
+  const [priceHistory, setPriceHistory] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('v8_price_history');
+      if (saved) {
+        try { return JSON.parse(saved); } catch (e) {}
+      }
+    }
+    return [];
+  });
+
   const updateCustomerProfile = (newProfile) => {
     const cleanPhone = (newProfile.phone || '').trim();
     const cleanName = (newProfile.fullName || '').trim();
@@ -422,7 +465,7 @@ export const StoreProvider = ({ children }) => {
   const registerCustomer = (profileData) => {
     const cleanPhone = (profileData.phone || '').trim();
     const cleanName = (profileData.fullName || '').trim();
-    const cleanPass = (profileData.password || '').trim();
+    const cleanPass = (profileData.password || '1234').trim();
 
     if (!cleanPhone) {
       showToast(lang === 'km' ? 'សូមបញ្ចូលលេខទូរស័ព្ទ!' : 'Please enter phone number!', 'error');
@@ -430,10 +473,6 @@ export const StoreProvider = ({ children }) => {
     }
     if (!cleanName) {
       showToast(lang === 'km' ? 'សូមបញ្ចូលឈ្មោះអតិថិជន!' : 'Please enter full name!', 'error');
-      return { success: false };
-    }
-    if (!cleanPass || cleanPass.length < 4) {
-      showToast(lang === 'km' ? 'លេខសម្ងាត់ត្រូវមានយ៉ាងតិច 4 ខ្ទង់!' : 'Password must be at least 4 characters!', 'error');
       return { success: false };
     }
 
@@ -602,6 +641,39 @@ export const StoreProvider = ({ children }) => {
       'success'
     );
     return { success: true, profile: restored };
+  };
+
+  // Delete Registered Customer Account (Admin capability)
+  const deleteCustomer = (targetPhone) => {
+    const cleanPhone = (targetPhone || '').trim().replace(/\s+/g, '');
+    if (!cleanPhone) {
+      showToast(lang === 'km' ? 'សូមបញ្ចូល/ជ្រើសរើសលេខទូរស័ព្ទអតិថិជន!' : 'Please select a customer phone!', 'error');
+      return { success: false };
+    }
+
+    const updatedList = registeredCustomers.filter(c => {
+      const p = (c.phone || '').trim().replace(/\s+/g, '');
+      return p !== cleanPhone && c.id !== targetPhone;
+    });
+
+    setRegisteredCustomers(updatedList);
+    safeSetItem(STORAGE_KEYS.REGISTERED_CUSTOMERS, JSON.stringify(updatedList));
+    syncPushToServer({ registered_customers: updatedList });
+
+    // If current logged-in customer is deleted, reset customerProfile to guest
+    if (customerProfile && customerProfile.phone && customerProfile.phone.trim().replace(/\s+/g, '') === cleanPhone) {
+      const guestProfile = { isRegistered: false, fullName: '', phone: '', avatar: '', balance: 0 };
+      setCustomerProfile(guestProfile);
+      safeSetItem(STORAGE_KEYS.CUSTOMER_PROFILE, JSON.stringify(guestProfile));
+    }
+
+    showToast(
+      lang === 'km'
+        ? `✅ បានលុបគណនីអតិថិជន ${targetPhone} ចេញពីប្រព័ន្ធរួចរាល់! អតិថិជនអាចចុះឈ្មោះឡើងវិញបាន`
+        : `✅ Customer account ${targetPhone} deleted successfully! Customer can now re-register.`,
+      'success'
+    );
+    return { success: true };
   };
 
   // Admin Reset Customer Password Action
@@ -1270,6 +1342,93 @@ const safeSetItem = (key, value) => {
     }));
   });
 
+  // Real-Time New Order Ringtone Alert State
+  const [newOrderAlert, setNewOrderAlert] = useState(null);
+  const [orderAudioEnabled, setOrderAudioEnabled] = useState(() => {
+    const saved = localStorage.getItem('v8_order_audio_enabled');
+    return saved !== null ? saved === 'true' : true;
+  });
+
+  const toggleOrderAudioAlert = () => {
+    setOrderAudioEnabled(prev => {
+      const next = !prev;
+      localStorage.setItem('v8_order_audio_enabled', String(next));
+      if (next) {
+        playNewOrderRingtone();
+      }
+      return next;
+    });
+  };
+
+  const dismissNewOrderAlert = () => {
+    setNewOrderAlert(null);
+  };
+
+  const triggerSystemAlert = (type, payload) => {
+    const alertData = {
+      type: type || 'order',
+      timestamp: new Date().toISOString(),
+      ...payload
+    };
+
+    setNewOrderAlert(alertData);
+
+    if (orderAudioEnabled) {
+      playNotificationSound(type);
+    }
+  };
+
+  // Payment Gateways Settings State (KHQR, Wallet, Credit Card, COD)
+  const [paymentSettings, setPaymentSettings] = useState(() => {
+    const saved = localStorage.getItem('v8_payment_settings_v1');
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        console.error('Failed to parse paymentSettings', e);
+      }
+    }
+    return {
+      khqr: {
+        enabled: true,
+        merchantName: 'V8 Online Mart',
+        merchantId: '00020101021238580016A000000704000101',
+        qrImage: '',
+        instruction_kh: 'សូមស្កែន QR ខាងលើដើម្បីទូទាត់ប្រាក់តាម ABA / Bakong App',
+        instruction_en: 'Scan the KHQR code above to pay via ABA / Bakong App'
+      },
+      wallet: {
+        enabled: true,
+        instruction_kh: 'ទូទាត់ប្រាក់ភ្លាមៗពីសមតុល្យកាបូបលុយ V8 Wallet របស់លោកអ្នក',
+        instruction_en: 'Pay instantly using your V8 Wallet balance'
+      },
+      card: {
+        enabled: true,
+        instruction_kh: 'ទូទាត់ដោយសុវត្ថិភាពតាម Visa, MasterCard ឬ UnionPay',
+        instruction_en: 'Secure payment via Visa, MasterCard or UnionPay'
+      },
+      cod: {
+        enabled: true,
+        instruction_kh: 'ប្រគល់ប្រាក់សុទ្ធជូនអ្នកដឹកជញ្ជូននៅពេលទទួលបានទំនិញដល់ផ្ទះ',
+        instruction_en: 'Pay cash to delivery driver upon receiving items at home'
+      }
+    };
+  });
+
+  const updatePaymentSettings = (methodKey, updatedConfig) => {
+    setPaymentSettings(prev => {
+      const next = {
+        ...prev,
+        [methodKey]: {
+          ...prev[methodKey],
+          ...updatedConfig
+        }
+      };
+      localStorage.setItem('v8_payment_settings_v1', JSON.stringify(next));
+      return next;
+    });
+  };
+
   // 4. Cart State
   const [cart, setCart] = useState(() => {
     const saved = localStorage.getItem(STORAGE_KEYS.CART);
@@ -1908,6 +2067,16 @@ const safeSetItem = (key, value) => {
     setOrders(prev => [newOrder, ...prev]);
     clearCart();
 
+    // Trigger Audio Ringtone & Popup Notification Alert for Admin
+    triggerSystemAlert('order', {
+      orderId: newOrder.id,
+      customerName: newOrder.customer_name || 'Guest Customer',
+      customerPhone: newOrder.customer_phone,
+      totalAmount: newOrder.total_amount,
+      itemCount: newOrder.order_items?.length || 1,
+      paymentMethod: newOrder.payment_method
+    });
+
     // Send Order Confirmation SMS
     if (smsSettings.enabled && newOrder.customer_phone) {
       const formattedTotal = formatPrice(newOrder.total_amount);
@@ -2003,6 +2172,15 @@ const safeSetItem = (key, value) => {
       });
     });
 
+    // Trigger Audio Ringtone & Popup Alert for Delivery Update
+    triggerSystemAlert('delivery', {
+      orderId,
+      status: newStatus,
+      customerName: targetOrder?.customer_name,
+      customerPhone: targetOrder?.customer_phone,
+      totalAmount: targetOrder?.total_amount
+    });
+
     // Send SMS Notification for Status Update
     if (smsSettings.enabled && targetOrder && targetOrder.customer_phone) {
       let smsMsg = '';
@@ -2029,6 +2207,14 @@ const safeSetItem = (key, value) => {
   const confirmOrderDelivery = (orderId, confirmedBy = 'customer', evidenceImage = null) => {
     const targetOrder = orders.find(o => o.id === orderId);
     if (!targetOrder) return { success: false, message: 'Order not found' };
+
+    triggerSystemAlert('delivery', {
+      orderId,
+      status: 'completed',
+      customerName: targetOrder?.customer_name,
+      customerPhone: targetOrder?.customer_phone,
+      totalAmount: targetOrder?.total_amount
+    });
 
     setOrders(prevOrders => {
       const updated = prevOrders.map(o => {
@@ -2154,14 +2340,76 @@ const safeSetItem = (key, value) => {
     );
   };
 
-  const adjustStock = (productId, delta) => {
+  const recordStockMovement = (movementPayload) => {
+    const entry = {
+      id: `LOG-${Date.now().toString().slice(-6)}`,
+      timestamp: new Date().toISOString(),
+      ...movementPayload
+    };
+    setStockMovements(prev => {
+      const updated = [entry, ...prev];
+      safeSetItem('v8_stock_movements', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const recordPriceChange = (productId, oldCost, newCost, oldPrice, newPrice, staffName = 'Admin') => {
+    if (oldCost === newCost && oldPrice === newPrice) return;
+    const entry = {
+      id: `PRC-${Date.now().toString().slice(-6)}`,
+      product_id: productId,
+      old_cost: oldCost,
+      new_cost: newCost,
+      old_price: oldPrice,
+      new_price: newPrice,
+      changed_by: staffName,
+      timestamp: new Date().toISOString()
+    };
+    setPriceHistory(prev => {
+      const updated = [entry, ...prev];
+      safeSetItem('v8_price_history', JSON.stringify(updated));
+      return updated;
+    });
+  };
+
+  const adjustStock = (productId, delta, options = {}) => {
+    const { 
+      type = delta >= 0 ? 'IN' : 'OUT', 
+      reason = 'Stock Adjustment', 
+      refNo = '', 
+      staffName = 'Admin',
+      newQty = null 
+    } = options;
+
     setProducts(prev => prev.map(p => {
-      if (p.id === productId) {
-        const newStock = Math.max(0, p.stock_quantity + delta);
-        return { ...p, stock_quantity: newStock };
+      if (p.id === productId || p.sku === productId) {
+        const prevQty = parseInt(p.stock_quantity, 10) || 0;
+        const targetQty = newQty !== null ? Math.max(0, parseInt(newQty, 10)) : Math.max(0, prevQty + delta);
+        const actualDelta = targetQty - prevQty;
+
+        // Record entry to stockMovements audit log
+        recordStockMovement({
+          product_id: p.id,
+          product_title: p.title_kh || p.title_en,
+          sku: p.sku,
+          type,
+          qty: actualDelta,
+          previous_stock: prevQty,
+          new_stock: targetQty,
+          reason,
+          ref_no: refNo || p.purchase_invoice_no || 'PO-SYS',
+          staff_name: staffName
+        });
+
+        return { ...p, stock_quantity: targetQty };
       }
       return p;
     }));
+
+    showToast(
+      lang === 'km' ? `បានកែសម្រួលស្តុកជោគជ័យ!` : `Stock adjusted successfully!`,
+      'success'
+    );
   };
 
   // Banner Management (Admin Only)
@@ -2370,6 +2618,10 @@ const safeSetItem = (key, value) => {
         editProduct,
         deleteProduct,
         adjustStock,
+        stockMovements,
+        priceHistory,
+        recordStockMovement,
+        recordPriceChange,
         resetDemoData,
 
         // 5 Core Financial & Inventory Analytics (Enterprise Dashboard)
@@ -2387,6 +2639,15 @@ const safeSetItem = (key, value) => {
         totalCostValue,
         totalInventoryValue,
         totalEstimatedStockProfit,
+
+        // Order Ringtone & Real-Time Alert State
+        newOrderAlert,
+        dismissNewOrderAlert,
+        orderAudioEnabled,
+        toggleOrderAudioAlert,
+        // Payment Gateways (KHQR, Wallet, Card, COD)
+        paymentSettings,
+        updatePaymentSettings,
 
         // Customer Profile State
         customerProfile,
@@ -2414,6 +2675,7 @@ const safeSetItem = (key, value) => {
         deductCredit,
         adminTopUpCustomerWallet,
         adminWithdrawCustomerWallet,
+        deleteCustomer,
         adminSetCustomerTier,
         adminUpdateCustomerNotes,
 
@@ -2454,9 +2716,6 @@ const safeSetItem = (key, value) => {
       {children}
     </StoreContext.Provider>
   );
-
-
-
 };
 
 export const useStore = () => {

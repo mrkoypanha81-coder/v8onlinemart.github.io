@@ -38,20 +38,7 @@ export const ProductCard = ({ product }) => {
           }`}
         />
 
-        {/* Top-Left Badges: Discount & HOT */}
-        <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 z-10">
-          {product.discount > 0 && (
-            <span className="bg-rose-600 text-white text-[10px] sm:text-xs font-black px-2 py-0.5 rounded-lg shadow-sm">
-              -{product.discount}%
-            </span>
-          )}
-          {product.is_featured && (
-            <span className="bg-amber-500 text-white text-[9px] font-extrabold px-1.5 py-0.5 rounded-md flex items-center shadow-sm">
-              <Flame className="w-3 h-3 mr-0.5 fill-white" />
-              HOT
-            </span>
-          )}
-        </div>
+
 
         {/* Top-Right Action Button: Wishlist */}
         <div className="absolute top-2.5 right-2.5 z-10">

@@ -5,7 +5,8 @@ import {
   LayoutDashboard, Package, ShoppingCart, Users, 
   Store, Bell, Plus, Search, ChevronRight, AlertTriangle, 
   TrendingUp, Shield, LogOut, ExternalLink, Globe, DollarSign,
-  Image as ImageIcon, Sparkles, Calendar, Clock, Truck, Settings, Type
+  Image as ImageIcon, Sparkles, Calendar, Clock, Truck, Settings, Type,
+  Volume2, VolumeX, BellRing, X, QrCode, CreditCard
 } from 'lucide-react';
 import { AdminAuth } from './AdminAuth';
 import { AdminOverview } from './AdminOverview';
@@ -17,6 +18,7 @@ import { DeliveryTracking } from './DeliveryTracking';
 import { AdminSettingsModal } from './AdminSettingsModal';
 import { NotificationManagement } from './NotificationManagement';
 import { MemberManagement } from './MemberManagement';
+import { PaymentManagement } from './PaymentManagement';
 
 export const AdminLayout = () => {
   const { 
@@ -34,7 +36,10 @@ export const AdminLayout = () => {
     setCurrency,
     fontSize,
     setFontSize,
-    t
+    newOrderAlert,
+    dismissNewOrderAlert,
+    orderAudioEnabled,
+    toggleOrderAudioAlert
   } = useStore();
 
   const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'inventory' | 'orders' | 'banners' | 'customers'
@@ -117,6 +122,13 @@ export const AdminLayout = () => {
       label_kh: 'សមាជិក / បុគ្គលិក', 
       label_en: 'Members', 
       icon: Shield,
+      badge: null
+    },
+    { 
+      id: 'payments', 
+      label_kh: 'ទូទាត់ប្រាក់ & QR', 
+      label_en: 'Payment Gateways', 
+      icon: QrCode,
       badge: null
     },
     { 
@@ -369,6 +381,29 @@ export const AdminLayout = () => {
           </div>
 
           <div className="flex items-center space-x-3">
+            {/* Order Audio Ringtone Toggle Button */}
+            <button
+              onClick={toggleOrderAudioAlert}
+              className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-black transition cursor-pointer border ${
+                orderAudioEnabled 
+                  ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-800' 
+                  : 'bg-slate-100 dark:bg-slate-800 text-slate-400 border-slate-300 dark:border-slate-700'
+              }`}
+              title={lang === 'km' ? 'សំឡេងជូនដំណឹងការបញ្ជាទិញ (Order Ringtone)' : 'Order Sound Notification'}
+            >
+              {orderAudioEnabled ? (
+                <>
+                  <Volume2 className="w-3.5 h-3.5 text-emerald-600 animate-pulse" />
+                  <span>{lang === 'km' ? '🔔 សំឡេង (ON)' : '🔔 Ringtone ON'}</span>
+                </>
+              ) : (
+                <>
+                  <VolumeX className="w-3.5 h-3.5 text-slate-400" />
+                  <span>{lang === 'km' ? '🔇 បិទសំឡេង' : '🔇 Muted'}</span>
+                </>
+              )}
+            </button>
+
             {/* Setting Button in Desktop Header */}
             <button
               onClick={() => setIsAdminSettingsOpen(true)}
@@ -449,6 +484,7 @@ export const AdminLayout = () => {
           {activeTab === 'notifications' && <NotificationManagement />}
           {activeTab === 'customers' && <CustomerAnalytics />}
           {activeTab === 'members' && <MemberManagement />}
+          {activeTab === 'payments' && <PaymentManagement />}
         </div>
       </main>
 
@@ -457,6 +493,175 @@ export const AdminLayout = () => {
         isOpen={isAdminSettingsOpen}
         onClose={() => setIsAdminSettingsOpen(false)}
       />
+
+      {/* ============================================================== */}
+      {/* REAL-TIME NEW ORDER RINGTONE ALERT POPUP MODAL                 */}
+      {/* ============================================================== */}
+      {/* ============================================================== */}
+      {/* UNIVERSAL REAL-TIME RINGTONE & POPUP ALERT SYSTEM              */}
+      {/* ============================================================== */}
+      {newOrderAlert && (() => {
+        const alertType = newOrderAlert.type || 'order';
+        const isOrder = alertType === 'order';
+        const isStock = alertType === 'stock';
+        const isDelivery = alertType === 'delivery';
+        const isCustomer = alertType === 'customer';
+
+        return (
+          <div className="fixed top-6 right-6 z-50 max-w-md w-full animate-bounce-short font-sans">
+            <div className={`p-5 rounded-3xl shadow-2xl border-2 space-y-3 relative overflow-hidden backdrop-blur-md text-white ${
+              isOrder ? 'bg-gradient-to-r from-emerald-900 via-slate-900 to-slate-950 border-emerald-500/80' :
+              isStock ? 'bg-gradient-to-r from-rose-950 via-slate-900 to-slate-950 border-rose-500/80' :
+              isDelivery ? 'bg-gradient-to-r from-blue-950 via-slate-900 to-slate-950 border-blue-500/80' :
+              'bg-gradient-to-r from-purple-950 via-slate-900 to-slate-950 border-purple-500/80'
+            }`}>
+              
+              {/* Animated Bell/Alert Header */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className={`p-3 rounded-2xl animate-pulse shadow-lg ${
+                    isOrder ? 'bg-emerald-500 text-slate-950 shadow-emerald-500/50' :
+                    isStock ? 'bg-rose-500 text-white shadow-rose-500/50' :
+                    isDelivery ? 'bg-blue-500 text-white shadow-blue-500/50' :
+                    'bg-purple-500 text-white shadow-purple-500/50'
+                  }`}>
+                    {isStock ? <AlertTriangle className="w-6 h-6 animate-bounce" /> :
+                     isDelivery ? <Truck className="w-6 h-6 animate-bounce" /> :
+                     isCustomer ? <Users className="w-6 h-6 animate-bounce" /> :
+                     <BellRing className="w-6 h-6 animate-bounce" />}
+                  </div>
+
+                  <div>
+                    <div className="inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-full text-[10px] font-black tracking-wider uppercase border bg-white/10">
+                      <Sparkles className="w-3 h-3 text-amber-400" />
+                      <span>
+                        {isOrder ? (lang === 'km' ? '🔔 មានការបញ្ជាទិញថ្មី!' : '🔔 NEW ORDER RECEIVED!') :
+                         isStock ? (lang === 'km' ? '⚠️ អាសន្នស្តុកទាប!' : '⚠️ LOW STOCK ALERT!') :
+                         isDelivery ? (lang === 'km' ? '🚚 អាប់ដេតការដឹកជញ្ជូន!' : '🚚 DELIVERY UPDATED!') :
+                         (lang === 'km' ? '👤 មានអតិថិជនថ្មី!' : '👤 NEW CUSTOMER!')}
+                      </span>
+                    </div>
+
+                    <h4 className="font-mono font-black text-lg text-amber-300 mt-0.5">
+                      {newOrderAlert.orderId || newOrderAlert.productTitle || newOrderAlert.customerName || 'ALERT'}
+                    </h4>
+                  </div>
+                </div>
+
+                <button
+                  onClick={dismissNewOrderAlert}
+                  className="p-1.5 text-slate-400 hover:text-white rounded-full hover:bg-slate-800 transition cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Brief Info Details */}
+              <div className="p-3.5 bg-slate-900/90 rounded-2xl border border-slate-800 space-y-1.5 text-xs">
+                {isOrder && (
+                  <>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-400">អតិថិជន:</span>
+                      <span className="font-bold text-white">{newOrderAlert.customerName} ({newOrderAlert.customerPhone})</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-400">ចំនួនទំនិញ:</span>
+                      <span className="font-bold text-white">{newOrderAlert.itemCount} items</span>
+                    </div>
+                    <div className="flex items-center justify-between border-t border-slate-800 pt-1.5">
+                      <span className="text-slate-300 font-bold">សរុប:</span>
+                      <span className="font-mono font-black text-base text-emerald-400">
+                        ${(parseFloat(newOrderAlert.totalAmount) || 0).toFixed(2)}
+                      </span>
+                    </div>
+                  </>
+                )}
+
+                {isStock && (
+                  <>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-400">ទំនិញ:</span>
+                      <span className="font-bold text-rose-300">{newOrderAlert.productTitle}</span>
+                    </div>
+                    <div className="flex items-center justify-between border-t border-slate-800 pt-1.5">
+                      <span className="text-slate-300 font-bold">ស្តុកនៅសល់:</span>
+                      <span className="font-mono font-black text-base text-rose-400">
+                        {newOrderAlert.stockQuantity} units
+                      </span>
+                    </div>
+                  </>
+                )}
+
+                {isDelivery && (
+                  <>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-400">Order ID:</span>
+                      <span className="font-mono font-bold text-blue-300">{newOrderAlert.orderId}</span>
+                    </div>
+                    <div className="flex items-center justify-between border-t border-slate-800 pt-1.5">
+                      <span className="text-slate-300 font-bold">ស្ថានភាពដឹក:</span>
+                      <span className="font-bold text-emerald-400 uppercase">
+                        {newOrderAlert.status}
+                      </span>
+                    </div>
+                  </>
+                )}
+
+                {isCustomer && (
+                  <>
+                    <div className="flex items-center justify-between">
+                      <span className="text-slate-400">ឈ្មោះអតិថិជន:</span>
+                      <span className="font-bold text-purple-300">{newOrderAlert.customerName}</span>
+                    </div>
+                    <div className="flex items-center justify-between border-t border-slate-800 pt-1.5">
+                      <span className="text-slate-300 font-bold">លេខទូរស័ព្ទ:</span>
+                      <span className="font-mono font-bold text-white">
+                        {newOrderAlert.customerPhone}
+                      </span>
+                    </div>
+                  </>
+                )}
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex items-center justify-end space-x-2 pt-1">
+                <button
+                  type="button"
+                  onClick={dismissNewOrderAlert}
+                  className="py-2 px-4 rounded-xl text-slate-300 hover:bg-slate-800 font-bold text-xs cursor-pointer"
+                >
+                  {lang === 'km' ? 'បោះបង់' : 'Dismiss'}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    dismissNewOrderAlert();
+                    if (isOrder) setActiveTab('orders');
+                    else if (isStock) setActiveTab('inventory');
+                    else if (isDelivery) setActiveTab('deliveries');
+                    else if (isCustomer) setActiveTab('customers');
+                  }}
+                  className={`py-2 px-5 font-black text-xs rounded-xl shadow-lg transition flex items-center space-x-1.5 cursor-pointer ${
+                    isOrder ? 'bg-emerald-500 hover:bg-emerald-600 text-slate-950 shadow-emerald-500/30' :
+                    isStock ? 'bg-rose-500 hover:bg-rose-600 text-white shadow-rose-500/30' :
+                    isDelivery ? 'bg-blue-500 hover:bg-blue-600 text-white shadow-blue-500/30' :
+                    'bg-purple-500 hover:bg-purple-600 text-white shadow-purple-500/30'
+                  }`}
+                >
+                  <span>
+                    {isOrder ? (lang === 'km' ? '👁️ មើលការបញ្ជាទិញ' : 'View Order') :
+                     isStock ? (lang === 'km' ? '👁️ ពិនិត្យស្តុក' : 'View Inventory') :
+                     isDelivery ? (lang === 'km' ? '🚚 តាមដានការដឹក' : 'View Delivery') :
+                     (lang === 'km' ? '👁️ មើលអតិថិជន' : 'View Customers')}
+                  </span>
+                </button>
+              </div>
+
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 };

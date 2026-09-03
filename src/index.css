@@ -90,7 +90,7 @@
   overflow: hidden;
 }
 
-/* Glassmorphism */
+/* Glassmorphism & Modern UI Effects */
 .glass-effect {
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
@@ -101,6 +101,29 @@
   background: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+}
+
+/* Card sheen sweep animation */
+@keyframes sheenSweep {
+  0% {
+    transform: translateX(-150%) rotate(25deg);
+  }
+  100% {
+    transform: translateX(250%) rotate(25deg);
+  }
+}
+
+.animate-sheen {
+  animation: sheenSweep 4s ease-in-out infinite;
+}
+
+/* Ambient glow utilities */
+.glow-emerald {
+  box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.35);
+}
+
+.glow-emerald-lg {
+  box-shadow: 0 20px 40px -15px rgba(16, 185, 129, 0.45);
 }
 
 /* KHQR Card background gradient */

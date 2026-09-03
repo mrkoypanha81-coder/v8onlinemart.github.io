@@ -3,7 +3,8 @@ import { useStore } from '../../context/StoreContext';
 import { 
   Search, Eye, Clock, CheckCircle2, Truck, 
   XCircle, AlertTriangle, Phone, MapPin, DollarSign, 
-  User, RefreshCw, X, ArrowUpDown, TrendingUp, Receipt
+  User, RefreshCw, X, ArrowUpDown, TrendingUp, Receipt,
+  Calendar, ArrowRight
 } from 'lucide-react';
 
 export const OrderManagement = () => {
@@ -18,7 +19,42 @@ export const OrderManagement = () => {
 
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [sortBy, setSortBy] = useState('newest'); // 'newest' | 'oldest' | 'price_high'
+  const [dateFilter, setDateFilter] = useState('all'); // 'all' | 'today' | 'yesterday' | 'this_week' | 'this_month' | 'custom'
+  const [selectedDate, setSelectedDate] = useState('');
   const [selectedOrder, setSelectedOrder] = useState(null);
+
+  // Date Helpers
+  const isSameDay = (d1, d2) => {
+    const a = new Date(d1);
+    const b = new Date(d2);
+    return a.getFullYear() === b.getFullYear() &&
+           a.getMonth() === b.getMonth() &&
+           a.getDate() === b.getDate();
+  };
+
+  const isTodayDate = (dateStr) => isSameDay(dateStr, new Date());
+  
+  const isYesterdayDate = (dateStr) => {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    return isSameDay(dateStr, yesterday);
+  };
+
+  const isThisWeekDate = (dateStr) => {
+    const d = new Date(dateStr);
+    const now = new Date();
+    const startOfWeek = new Date(now);
+    startOfWeek.setDate(now.getDate() - now.getDay());
+    startOfWeek.setHours(0,0,0,0);
+    return d >= startOfWeek;
+  };
+
+  const isThisMonthDate = (dateStr) => {
+    const d = new Date(dateStr);
+    const now = new Date();
+    return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+  };
 
   const filteredOrders = orders.filter(o => {
     const query = search.toLowerCase();
@@ -26,7 +62,32 @@ export const OrderManagement = () => {
                         (o.customer_name || '').toLowerCase().includes(query) ||
                         (o.customer_phone || '').toLowerCase().includes(query);
     const matchStatus = statusFilter === 'all' || o.status === statusFilter;
-    return matchSearch && matchStatus;
+    if (!matchSearch || !matchStatus) return false;
+
+    // Date Filter logic
+    const createdAt = o.created_at || Date.now();
+    if (dateFilter === 'today' && !isTodayDate(createdAt)) return false;
+    if (dateFilter === 'yesterday' && !isYesterdayDate(createdAt)) return false;
+    if (dateFilter === 'this_week' && !isThisWeekDate(createdAt)) return false;
+    if (dateFilter === 'this_month' && !isThisMonthDate(createdAt)) return false;
+    if (dateFilter === 'custom' && selectedDate) {
+      const oDateStr = new Date(createdAt).toISOString().split('T')[0];
+      if (oDateStr !== selectedDate) return false;
+    }
+
+    return true;
+  }).sort((a, b) => {
+    const timeA = new Date(a.created_at || 0).getTime();
+    const timeB = new Date(b.created_at || 0).getTime();
+
+    if (sortBy === 'oldest') {
+      return timeA - timeB;
+    } else if (sortBy === 'price_high') {
+      return (b.total_amount || 0) - (a.total_amount || 0);
+    } else {
+      // Default: 'newest' (Newest data always at the top!)
+      return timeB - timeA;
+    }
   });
 
   const getStatusBadge = (status) => {
@@ -56,6 +117,38 @@ export const OrderManagement = () => {
     return { totalCost, profit, margin };
   };
 
+  const getRowStatusColor = (status) => {
+    switch (status) {
+      case 'pending':
+      case 'paid':
+        return 'bg-amber-100/90 dark:bg-amber-950/70 hover:bg-amber-200/90 dark:hover:bg-amber-900/80 border-l-6 border-l-amber-500 font-medium text-slate-950 dark:text-slate-100';
+      case 'shipped':
+        return 'bg-sky-100/90 dark:bg-sky-950/70 hover:bg-sky-200/90 dark:hover:bg-sky-900/80 border-l-6 border-l-sky-500 font-medium text-slate-950 dark:text-slate-100';
+      case 'completed':
+        return 'bg-emerald-100/90 dark:bg-emerald-950/70 hover:bg-emerald-200/90 dark:hover:bg-emerald-900/80 border-l-6 border-l-emerald-500 font-medium text-slate-950 dark:text-slate-100';
+      case 'cancelled':
+        return 'bg-rose-100/90 dark:bg-rose-950/70 hover:bg-rose-200/90 dark:hover:bg-rose-900/80 border-l-6 border-l-rose-500 font-medium text-slate-950 dark:text-slate-100';
+      default:
+        return 'hover:bg-slate-100 dark:hover:bg-slate-800/50 border-l-6 border-l-slate-400 dark:border-l-slate-600 text-slate-900 dark:text-slate-100';
+    }
+  };
+
+  const getRowIndexBadgeStyle = (status) => {
+    switch (status) {
+      case 'pending':
+      case 'paid':
+        return 'bg-amber-200/90 dark:bg-amber-900/80 text-amber-950 dark:text-amber-100 font-black';
+      case 'shipped':
+        return 'bg-sky-200/90 dark:bg-sky-900/80 text-sky-950 dark:text-sky-100 font-black';
+      case 'completed':
+        return 'bg-emerald-200/90 dark:bg-emerald-900/80 text-emerald-950 dark:text-emerald-100 font-black';
+      case 'cancelled':
+        return 'bg-rose-200/90 dark:bg-rose-900/80 text-rose-950 dark:text-rose-100 font-black';
+      default:
+        return 'bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-black';
+    }
+  };
+
   return (
     <div className="space-y-6 animate-fade-in pb-12">
       {/* Header & Filters */}
@@ -69,8 +162,8 @@ export const OrderManagement = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-slate-100 dark:border-slate-800">
-          <div className="relative">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-slate-100 dark:border-slate-800">
+          <div className="relative col-span-1 sm:col-span-1">
             <Search className="w-4.5 h-4.5 absolute left-3 top-3 text-slate-400" />
             <input
               type="text"
@@ -96,15 +189,95 @@ export const OrderManagement = () => {
               <option value="cancelled">Cancelled (បានបោះបង់)</option>
             </select>
           </div>
+
+          {/* Sort Order Selector */}
+          <div>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              aria-label="Sort order selector in order management"
+              className="w-full px-4 py-2.5 text-sm border border-slate-200 dark:border-slate-700 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none bg-slate-50 dark:bg-slate-800 text-slate-800 dark:text-slate-100 font-bold cursor-pointer"
+            >
+              <option value="newest">🆕 ថ្មីៗនៅខាងលើ (Newest First)</option>
+              <option value="oldest">⏳ ចាស់ៗនៅខាងលើ (Oldest First)</option>
+              <option value="price_high">💲 តម្លៃខ្ពស់មុន (Highest Price)</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Date Filter Bar */}
+        <div className="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-black text-slate-700 dark:text-slate-300 flex items-center space-x-1.5">
+              <Calendar className="w-3.5 h-3.5 text-emerald-600" />
+              <span>{lang === 'km' ? '📅 តម្រងតាមកាលបរិច្ឆេទ (Date Filter):' : 'Date Filter:'}</span>
+            </span>
+
+            {dateFilter === 'custom' && (
+              <input
+                type="date"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                className="px-3 py-1 text-xs font-bold bg-white dark:bg-slate-800 border border-emerald-500 rounded-xl text-slate-800 dark:text-slate-100 outline-none shadow-xs"
+              />
+            )}
+          </div>
+
+          <div className="flex flex-wrap gap-1.5">
+            {[
+              { id: 'all', label: '📅 ទាំងអស់ (All Time)' },
+              { id: 'today', label: '☀️ ថ្ងៃនេះ (Today)' },
+              { id: 'yesterday', label: '🌙 ម្សិលមិញ (Yesterday)' },
+              { id: 'this_week', label: '📅 សប្តាហ៍នេះ (This Week)' },
+              { id: 'this_month', label: '🗓️ ខែនេះ (This Month)' },
+              { id: 'custom', label: '📆 ជ្រើសរើសថ្ងៃ... (Custom Date)' }
+            ].map(tab => (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setDateFilter(tab.id)}
+                className={`px-3 py-1 rounded-xl text-xs font-bold transition cursor-pointer ${
+                  dateFilter === tab.id
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
       {/* Orders Data Table */}
       <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-soft overflow-hidden">
+        
+        {/* COLOR HIGHLIGHT LEGEND BAR */}
+        <div className="bg-slate-50 dark:bg-slate-950 px-4 py-2.5 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2 text-xs">
+          <span className="font-black text-slate-700 dark:text-slate-300 flex items-center space-x-1.5">
+            <span>🎨 ពណ៌សម្គាល់ជួរ (Status Highlight Legend):</span>
+          </span>
+          <div className="flex flex-wrap items-center gap-2 font-bold text-[11px]">
+            <span className="inline-flex items-center space-x-1 bg-amber-100 dark:bg-amber-950/80 text-amber-900 dark:text-amber-300 px-2.5 py-0.5 rounded-lg border-l-4 border-amber-500">
+              <span>🟡 ថ្មី / វេចខ្ចប់ (New/Pending)</span>
+            </span>
+            <span className="inline-flex items-center space-x-1 bg-blue-100 dark:bg-blue-950/80 text-blue-900 dark:text-blue-300 px-2.5 py-0.5 rounded-lg border-l-4 border-blue-500">
+              <span>🔵 កំពុងដឹក (Shipped)</span>
+            </span>
+            <span className="inline-flex items-center space-x-1 bg-emerald-100 dark:bg-emerald-950/80 text-emerald-900 dark:text-emerald-300 px-2.5 py-0.5 rounded-lg border-l-4 border-emerald-500">
+              <span>🟢 បានប្រគល់ & ទូទាត់រួច (Paid/Completed)</span>
+            </span>
+            <span className="inline-flex items-center space-x-1 bg-rose-100 dark:bg-rose-950/80 text-rose-900 dark:text-rose-300 px-2.5 py-0.5 rounded-lg border-l-4 border-rose-500">
+              <span>🔴 បានបោះបង់ (Cancelled)</span>
+            </span>
+          </div>
+        </div>
+
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead className="bg-slate-50 dark:bg-slate-950 text-slate-650 dark:text-slate-350 font-black uppercase text-xs tracking-wider border-b border-slate-200 dark:border-slate-800">
               <tr>
+                <th className="py-4 px-4 w-12 text-center whitespace-nowrap">#</th>
                 <th className="py-4 px-4 whitespace-nowrap">Order ID</th>
                 <th className="py-4 px-4 whitespace-nowrap">Date & Time</th>
                 <th className="py-4 px-4 whitespace-nowrap">Customer</th>
@@ -116,19 +289,23 @@ export const OrderManagement = () => {
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+            <tbody className="divide-y divide-slate-200/60 dark:divide-slate-800">
               {filteredOrders.length === 0 ? (
                 <tr>
-                  <td colSpan="8" className="py-12 text-center text-slate-400 text-xs">
+                  <td colSpan="9" className="py-12 text-center text-slate-400 text-xs">
                     {t.noOrdersFound}
                   </td>
                 </tr>
               ) : (
-                filteredOrders.map(order => {
+                filteredOrders.map((order, idx) => {
                   const { totalCost, profit, margin } = calculateOrderProfit(order);
 
                   return (
-                    <tr key={order.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/50 transition">
+                    <tr key={order.id} className={`${getRowStatusColor(order.status)} transition-colors duration-150`}>
+                      <td className={`py-4 px-4 font-mono font-black text-center whitespace-nowrap ${getRowIndexBadgeStyle(order.status)}`}>
+                        #{idx + 1}
+                      </td>
+
                       <td className="py-4 px-4 font-mono font-bold text-emerald-600 dark:text-emerald-400 whitespace-nowrap">
                         {order.id}
                       </td>

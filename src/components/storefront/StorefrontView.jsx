@@ -45,8 +45,15 @@ export const StorefrontView = () => {
     return matchSearch && matchCat;
   });
 
-  // Sort products
+  // Sort products (Pin Clearance / Unsold Promoted products to the VERY TOP មុនគេបង្អស់!)
   displayedProducts.sort((a, b) => {
+    const isPromotedA = (a.is_clearance || a.is_slow_moving || a.is_promoted) ? 1 : 0;
+    const isPromotedB = (b.is_clearance || b.is_slow_moving || b.is_promoted) ? 1 : 0;
+
+    if (isPromotedA !== isPromotedB) {
+      return isPromotedB - isPromotedA; // Clearance / Unsold Items pin to top!
+    }
+
     if (sortBy === 'price_asc') return a.price - b.price;
     if (sortBy === 'price_desc') return b.price - a.price;
     if (sortBy === 'popular') return (b.sold_count || 0) - (a.sold_count || 0);
@@ -138,7 +145,7 @@ export const StorefrontView = () => {
               <div className="w-8 h-8 rounded-xl bg-orange-600 flex items-center justify-center text-white font-black text-base">
                 V8
               </div>
-              <span className="font-black text-lg text-white">V8 MINI MART</span>
+              <span className="font-black text-lg text-white">V8 ONLINE MART</span>
             </div>
             <p className="text-slate-400 leading-relaxed text-[11px]">
               {lang === 'km' 
@@ -182,7 +189,7 @@ export const StorefrontView = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] text-slate-500">
-          <div>© 2026 V8 Mini Mart Co., Ltd. All rights reserved.</div>
+          <div>© 2026 V8 Online Mart Co., Ltd. All rights reserved.</div>
           <button 
             onClick={() => navigateTo('/admin')}
             className="text-slate-500 hover:text-orange-400 transition flex items-center space-x-1"
