@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useStore } from '../../context/StoreContext';
+import { resolveAssetUrl, handleImageError } from '../../utils/resolveAssetUrl';
 import confetti from 'canvas-confetti';
 import { 
   Truck, Search, CheckCircle2, Clock, Package, 
@@ -616,7 +617,7 @@ export const DeliveryTracking = () => {
                               onClick={() => setPreviewImageModal(order.delivery_evidence_image)}
                               className="w-10 h-10 mx-auto rounded-lg overflow-hidden border border-emerald-500/50 cursor-pointer group shadow-2xs relative"
                             >
-                              <img src={order.delivery_evidence_image} alt="Proof" className="w-full h-full object-cover group-hover:scale-110 transition" />
+                              <img src={resolveAssetUrl(order.delivery_evidence_image)} alt="Proof" onError={handleImageError} className="w-full h-full object-cover group-hover:scale-110 transition" />
                               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-[9px] font-bold">
                                 👁️
                               </div>
@@ -805,8 +806,9 @@ export const DeliveryTracking = () => {
                           className="w-16 h-16 rounded-xl overflow-hidden border border-emerald-500/40 relative cursor-pointer group shadow-2xs flex-shrink-0"
                         >
                           <img 
-                            src={order.delivery_evidence_image} 
+                            src={resolveAssetUrl(order.delivery_evidence_image)} 
                             alt="Delivery Evidence" 
+                            onError={handleImageError}
                             className="w-full h-full object-cover group-hover:scale-110 transition duration-300"
                           />
                           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white">
@@ -1051,8 +1053,9 @@ export const DeliveryTracking = () => {
                   </div>
                   <div className="w-full max-h-48 rounded-xl overflow-hidden border border-emerald-300">
                     <img 
-                      src={selectedDelivery.delivery_evidence_image} 
+                      src={resolveAssetUrl(selectedDelivery.delivery_evidence_image)} 
                       alt="Delivery Evidence" 
+                      onError={handleImageError}
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -1132,8 +1135,9 @@ export const DeliveryTracking = () => {
               <X className="w-6 h-6" />
             </button>
             <img 
-              src={previewImageModal} 
+              src={resolveAssetUrl(previewImageModal)} 
               alt="Full Evidence Preview" 
+              onError={handleImageError}
               className="max-h-[80vh] w-auto max-w-full rounded-2xl object-contain shadow-2xl border border-white/20"
             />
             <div className="text-white text-xs font-bold mt-3 bg-black/60 px-4 py-1.5 rounded-full">

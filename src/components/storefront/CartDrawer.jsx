@@ -1,5 +1,6 @@
 import React from 'react';
 import { useStore } from '../../context/StoreContext';
+import { resolveAssetUrl, handleImageError } from '../../utils/resolveAssetUrl';
 import { 
   X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, 
   Truck, ShieldCheck, Sparkles 
@@ -106,8 +107,9 @@ export const CartDrawer = () => {
               cart.map((item) => (
                 <div key={item.id} className="pt-3 first:pt-0 flex items-center space-x-3">
                   <img
-                    src={item.product_image}
+                    src={resolveAssetUrl(item.product_image)}
                     alt={item.product_title_en}
+                    onError={handleImageError}
                     className="w-16 h-16 rounded-xl object-cover border border-slate-200 flex-shrink-0"
                   />
                   <div className="flex-1 min-w-0">

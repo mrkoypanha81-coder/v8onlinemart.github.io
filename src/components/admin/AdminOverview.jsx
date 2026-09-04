@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useStore } from '../../context/StoreContext';
+import { resolveAssetUrl, handleImageError } from '../../utils/resolveAssetUrl';
 import { 
   DollarSign, ShoppingCart, Package, AlertTriangle, 
   TrendingUp, ArrowUpRight, CheckCircle2, Clock, 
@@ -572,8 +573,9 @@ export const AdminOverview = ({ onNavigate }) => {
                 <div className="flex items-center space-x-3">
                   <div className="relative">
                     <img 
-                      src={product.images[0]} 
+                      src={resolveAssetUrl(product.images?.[0])} 
                       alt={product.title_en || product.title_kh} 
+                      onError={handleImageError}
                       className="w-11 h-11 rounded-xl object-cover border border-slate-200 dark:border-slate-700 flex-shrink-0"
                     />
                     <span className="absolute -top-1.5 -left-1.5 w-5 h-5 rounded-full bg-slate-900 text-white font-black text-[10px] flex items-center justify-center shadow-xs">

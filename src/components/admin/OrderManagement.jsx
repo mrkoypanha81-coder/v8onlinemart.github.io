@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useStore } from '../../context/StoreContext';
+import { resolveAssetUrl, handleImageError } from '../../utils/resolveAssetUrl';
 import { 
   Search, Eye, Clock, CheckCircle2, Truck, 
   XCircle, AlertTriangle, Phone, MapPin, DollarSign, 
@@ -464,7 +465,7 @@ export const OrderManagement = () => {
                       return (
                         <div key={idx} className="p-3 flex items-center justify-between text-sm">
                           <div className="flex items-center space-x-3">
-                            <img src={item.product_image} alt={item.product_name} className="w-10 h-10 rounded-lg object-cover border border-slate-200 dark:border-slate-700" />
+                            <img src={resolveAssetUrl(item.product_image)} alt={item.product_name} onError={handleImageError} className="w-10 h-10 rounded-lg object-cover border border-slate-200 dark:border-slate-700" />
                             <div>
                               <div className="font-bold text-slate-800 dark:text-slate-100">{item.product_name}</div>
                               <div className="text-xs text-slate-450 dark:text-slate-500 font-mono">
@@ -505,7 +506,7 @@ export const OrderManagement = () => {
                         <span className="text-[10px] bg-emerald-200 dark:bg-emerald-800 px-2 py-0.5 rounded-full">Verified</span>
                       </div>
                       <div className="w-full max-h-48 rounded-lg overflow-hidden border border-emerald-300 dark:border-emerald-700">
-                        <img src={selectedOrder.delivery_evidence_image} alt="Evidence" className="w-full h-full object-cover" />
+                        <img src={resolveAssetUrl(selectedOrder.delivery_evidence_image)} alt="Evidence" onError={handleImageError} className="w-full h-full object-cover" />
                       </div>
                     </div>
                   )}

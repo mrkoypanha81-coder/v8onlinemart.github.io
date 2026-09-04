@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useStore } from '../../context/StoreContext';
+import { resolveAssetUrl, handleImageError } from '../../utils/resolveAssetUrl';
 import { 
   Image, Plus, Trash2, Edit3, Eye, EyeOff, Upload, 
   Sparkles, Check, X, AlertCircle, ArrowRight, Layers, Crop,
@@ -195,7 +196,7 @@ export const BannerManagement = () => {
             >
               {b.image && (
                 <div className="absolute inset-0 z-0">
-                  <img src={b.image} alt={b.title_en} className="w-full h-full object-cover brightness-95" />
+                  <img src={resolveAssetUrl(b.image)} alt={b.title_en} onError={handleImageError} className="w-full h-full object-cover brightness-95" />
                 </div>
               )}
 
@@ -331,7 +332,7 @@ export const BannerManagement = () => {
                 >
                   {formData.image ? (
                     <div className="absolute inset-0 z-0 flex items-center justify-center">
-                      <img src={formData.image} alt="Preview" className="w-full h-full object-cover brightness-95" />
+                      <img src={resolveAssetUrl(formData.image)} alt="Preview" onError={handleImageError} className="w-full h-full object-cover brightness-95" />
                       {formData.badge_kh && (
                         <div className="absolute top-2.5 right-2.5">
                           <span className="bg-orange-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full shadow-sm">

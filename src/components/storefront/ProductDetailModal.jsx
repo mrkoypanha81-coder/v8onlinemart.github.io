@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useStore } from '../../context/StoreContext';
+import { resolveAssetUrl, handleImageError } from '../../utils/resolveAssetUrl';
 import { 
   X, Heart, ShoppingBag, Plus, Minus, 
   Check, ShieldCheck, Truck, RotateCcw, AlertTriangle,
@@ -44,6 +45,8 @@ export const ProductDetailModal = () => {
     }
   };
 
+  const activeImageSrc = resolveAssetUrl(product.images?.[activeImageIndex] || product.images?.[0]);
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/70 backdrop-blur-sm animate-fade-in select-none">
       <div className="bg-white dark:bg-slate-900 w-full max-w-3xl rounded-3xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800 relative max-h-[92vh] flex flex-col md:flex-row">
@@ -59,8 +62,9 @@ export const ProductDetailModal = () => {
         <div className="md:w-1/2 p-4 sm:p-6 bg-slate-50 dark:bg-slate-850 flex flex-col justify-between border-b md:border-b-0 md:border-r border-slate-100 dark:border-slate-800">
           <div className="aspect-square w-full rounded-2xl overflow-hidden bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700 shadow-inner relative">
             <img
-              src={product.images[activeImageIndex] || product.images[0]}
+              src={activeImageSrc}
               alt={product.title_en || product.title_kh}
+              onError={handleImageError}
               className="w-full h-full object-cover"
             />
             {product.discount > 0 && (
@@ -81,7 +85,7 @@ export const ProductDetailModal = () => {
                     activeImageIndex === idx ? 'border-emerald-600 ring-2 ring-emerald-200 dark:ring-emerald-900' : 'border-slate-200 dark:border-slate-700 opacity-60'
                   }`}
                 >
-                  <img src={img} alt="thumb" className="w-full h-full object-cover" />
+                  <img src={resolveAssetUrl(img)} alt="thumb" onError={handleImageError} className="w-full h-full object-cover" />
                 </button>
               ))}
             </div>

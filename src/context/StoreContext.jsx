@@ -39,25 +39,8 @@ const INITIAL_EXPENSES = [
 
 const DEFAULT_EXCHANGE_RATE = 4000; // 1 USD = 4,000 KHR (Default standard as requested)
 
-/**
- * Safely resolves relative or absolute static asset paths against Vite's configured base URL.
- * Handles './image prodacts/...', '/image prodacts/...', external URLs, and data URLs.
- */
-export const resolveAssetUrl = (url) => {
-  if (!url || typeof url !== 'string') return url || '';
-  if (
-    url.startsWith('data:') ||
-    url.startsWith('blob:') ||
-    url.startsWith('http://') ||
-    url.startsWith('https://')
-  ) {
-    return url;
-  }
-  const cleanPath = url.replace(/^\.?\/+/, '');
-  const base = import.meta.env.BASE_URL || '/';
-  const prefix = base.endsWith('/') ? base : `${base}/`;
-  return `${prefix}${cleanPath}`;
-};
+import { resolveAssetUrl, handleImageError, DEFAULT_FALLBACK_IMAGE } from '../utils/resolveAssetUrl';
+export { resolveAssetUrl, handleImageError, DEFAULT_FALLBACK_IMAGE };
 
 const checkIsAdminRoute = () => {
   if (typeof window === 'undefined') return false;
@@ -1658,16 +1641,24 @@ const safeSetItem = (key, value) => {
           lastServerSync.current = data.lastUpdated;
 
           if (Array.isArray(data.products) && data.products.length > 0) {
-            setProducts(data.products);
-            safeSetItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(data.products));
+            const mappedProducts = data.products.map(p => ({
+              ...p,
+              images: Array.isArray(p.images) ? p.images.map(resolveAssetUrl) : []
+            }));
+            setProducts(mappedProducts);
+            safeSetItem(STORAGE_KEYS.PRODUCTS, JSON.stringify(mappedProducts));
           }
           if (Array.isArray(data.orders)) {
             setOrders(data.orders);
             safeSetItem(STORAGE_KEYS.ORDERS, JSON.stringify(data.orders));
           }
           if (Array.isArray(data.banners)) {
-            setBanners(data.banners);
-            safeSetItem(STORAGE_KEYS.BANNERS, JSON.stringify(data.banners));
+            const mappedBanners = data.banners.map(b => ({
+              ...b,
+              image: b.image ? resolveAssetUrl(b.image) : b.image
+            }));
+            setBanners(mappedBanners);
+            safeSetItem(STORAGE_KEYS.BANNERS, JSON.stringify(mappedBanners));
           }
           if (Array.isArray(data.notifications)) {
             setNotifications(data.notifications);

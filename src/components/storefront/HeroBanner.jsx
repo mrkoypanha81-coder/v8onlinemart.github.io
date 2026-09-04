@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useStore } from '../../context/StoreContext';
+import { resolveAssetUrl, handleImageError } from '../../utils/resolveAssetUrl';
 import { Sparkles, ChevronRight, ChevronLeft } from 'lucide-react';
 
 
@@ -56,8 +57,9 @@ export const HeroBanner = () => {
         {banner.image ? (
           <div className="relative w-full h-full min-h-[195px] sm:min-h-[250px] flex items-center justify-center">
             <img 
-              src={banner.image} 
+              src={resolveAssetUrl(banner.image)} 
               alt={banner.title_en || 'Promotion Banner'} 
+              onError={handleImageError}
               className="w-full h-full object-cover object-center group-hover:scale-102 transition duration-500 min-h-[195px] sm:min-h-[250px]"
             />
             {/* Subtle bottom tag badge only if badge exists, placed cleanly */}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useStore } from '../../context/StoreContext';
+import { resolveAssetUrl, handleImageError } from '../../utils/resolveAssetUrl';
 import { 
   ShoppingBag, Heart, AlertTriangle, 
   Flame, Check
@@ -21,6 +22,7 @@ export const ProductCard = ({ product }) => {
   const isOutOfStock = product.stock_quantity === 0;
   const isLowStock = product.stock_quantity > 0 && product.stock_quantity <= (product.low_stock_threshold || 5);
   const dual = formatDualPrice(product.price, product.currency);
+  const imageUrl = resolveAssetUrl(product.images?.[0]);
 
   return (
     <div 
@@ -30,8 +32,9 @@ export const ProductCard = ({ product }) => {
       {/* 1. Image Container (Crisp 1:1 Aspect Ratio) */}
       <div className="relative aspect-square w-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
         <img
-          src={product.images[0]}
+          src={imageUrl}
           alt={product.title_en || product.title_kh}
+          onError={handleImageError}
           loading="lazy"
           className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ${
             isOutOfStock ? 'grayscale opacity-60' : ''

@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useStore } from '../../context/StoreContext';
+import { resolveAssetUrl, handleImageError } from '../../utils/resolveAssetUrl';
 import { 
   Search, Plus, Filter, Edit, Trash2, PlusCircle, 
   MinusCircle, AlertTriangle, CheckCircle, XCircle, 
@@ -679,7 +680,7 @@ export const InventoryTable = () => {
                 {/* Row 1: Image, Title, SKU */}
                 <div className="flex items-start space-x-3">
                   <div className="w-16 h-16 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex-shrink-0">
-                    <img src={p.images[0]} alt={p.title_en || p.title_kh} className="w-full h-full object-cover" />
+                    <img src={resolveAssetUrl(p.images?.[0])} alt={p.title_en || p.title_kh} onError={handleImageError} className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <span className="font-mono text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-500 px-1.5 py-0.5 rounded font-bold">
@@ -836,8 +837,9 @@ export const InventoryTable = () => {
                     <td className="px-5 py-3.5">
                       <div className="flex items-center space-x-3">
                         <img 
-                          src={p.images[0]} 
+                          src={resolveAssetUrl(p.images?.[0])} 
                           alt={p.title_en || p.title_kh} 
+                          onError={handleImageError}
                           className="w-11 h-11 rounded-xl object-cover border border-slate-200 dark:border-slate-700 flex-shrink-0"
                         />
                         <div>
@@ -1087,8 +1089,9 @@ export const InventoryTable = () => {
                 <div className="flex items-center space-x-3">
                   <div className="w-20 h-20 rounded-2xl overflow-hidden bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex-shrink-0 shadow-xs relative">
                     <img 
-                      src={formData.images[0]} 
+                      src={resolveAssetUrl(formData.images?.[0])} 
                       alt="Product Preview" 
+                      onError={handleImageError}
                       className="w-full h-full object-cover"
                     />
                     {isUploadingImage && (

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useStore } from '../../context/StoreContext';
+import { resolveAssetUrl, handleImageError } from '../../utils/resolveAssetUrl';
 import { 
   Search, X, ShoppingBag, ArrowRight, Sparkles, 
   Flame, Tag, Filter, Check
@@ -145,8 +146,9 @@ export const SearchModal = ({ isOpen, onClose }) => {
                 >
                   <div className="flex items-center space-x-3 min-w-0">
                     <img
-                      src={product.images[0]}
+                      src={resolveAssetUrl(product.images?.[0])}
                       alt={product.title_en || product.title_kh}
+                      onError={handleImageError}
                       className="w-12 h-12 rounded-xl object-cover border border-slate-200 dark:border-slate-700 flex-shrink-0"
                     />
                     <div className="min-w-0">

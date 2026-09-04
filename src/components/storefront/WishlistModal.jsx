@@ -1,5 +1,6 @@
 import React from 'react';
 import { useStore } from '../../context/StoreContext';
+import { resolveAssetUrl, handleImageError } from '../../utils/resolveAssetUrl';
 import { X, Heart, ShoppingBag, Trash2 } from 'lucide-react';
 
 export const WishlistModal = ({ isOpen, onClose }) => {
@@ -30,7 +31,7 @@ export const WishlistModal = ({ isOpen, onClose }) => {
             wishlist.map(product => (
               <div key={product.id} className="pt-3 first:pt-0 flex items-center justify-between space-x-3">
                 <div className="flex items-center space-x-3 flex-1 min-w-0">
-                  <img src={product.images[0]} alt={product.title_en} className="w-12 h-12 rounded-xl object-cover border" />
+                  <img src={resolveAssetUrl(product.images?.[0])} alt={product.title_en} onError={handleImageError} className="w-12 h-12 rounded-xl object-cover border" />
                   <div className="min-w-0">
                     <p className="text-xs font-bold text-slate-800 line-clamp-1">{lang === 'km' ? product.title_kh : product.title_en}</p>
                     <span className="text-xs font-bold text-orange-600">{formatPrice(product.price)}</span>
