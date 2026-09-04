@@ -365,8 +365,8 @@ export const InventoryTable = () => {
       setIsUploadingImage(true);
       setCompressionStats(null); // Clear previous stats
 
-      // 1. Auto-compress client-side to target limit of 1MB while keeping resolution clear
-      const compressResult = await compressImageToLimit(file, 1 * 1024 * 1024);
+      // 1. Auto-compress client-side to target limit of 150KB while keeping resolution clear
+      const compressResult = await compressImageToLimit(file, 150 * 1024);
 
       setCompressionStats({
         original: compressResult.originalFormatted,

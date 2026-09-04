@@ -72,19 +72,19 @@ export const formatBytes = (bytes) => {
  * @param {number} targetSizeInBytes 
  * @returns {Promise<{base64: string, originalSize: number, compressedSize: number, ratio: number, originalFormatted: string, compressedFormatted: string}>}
  */
-export const compressImageToLimit = async (file, targetSizeInBytes = 1 * 1024 * 1024) => {
+export const compressImageToLimit = async (file, targetSizeInBytes = 120 * 1024) => {
   const originalSize = file.size;
   
   // Load the image
   const img = await loadImage(file);
   
-  let maxWidth = 2048; // Max resolution bounding box (extremely clear for products)
-  let maxHeight = 2048;
-  let quality = 0.92; // Start with very high quality
+  let maxWidth = 800; // Max resolution bounding box (ultra clear for products & fast load)
+  let maxHeight = 800;
+  let quality = 0.85; // Start with high quality
   let compressedBase64 = '';
   let compressedSize = 0;
   
-  // Up to 5 iterations of compression targeting the 1MB limit
+  // Up to 5 iterations of compression targeting the 120KB limit
   for (let i = 0; i < 5; i++) {
     const canvas = drawToCanvas(img, maxWidth, maxHeight);
     compressedBase64 = canvas.toDataURL('image/jpeg', quality);
@@ -98,20 +98,20 @@ export const compressImageToLimit = async (file, targetSizeInBytes = 1 * 1024 * 
     }
     
     // Otherwise, decrease quality or resolution iteratively
-    if (quality > 0.70) {
+    if (quality > 0.65) {
       quality -= 0.08;
     } else {
-      // Reduce dimensions if quality is already at 0.70
-      maxWidth = Math.round(maxWidth * 0.8);
-      maxHeight = Math.round(maxHeight * 0.8);
-      quality = 0.80; // Reset quality slightly higher for scaled down image
+      // Reduce dimensions if quality is already low
+      maxWidth = Math.round(maxWidth * 0.85);
+      maxHeight = Math.round(maxHeight * 0.85);
+      quality = 0.75;
     }
   }
   
   // Final safeguard: if still larger than target size, force strict downscale and quality
   if (compressedSize > targetSizeInBytes) {
-    const canvas = drawToCanvas(img, 1200, 1200);
-    compressedBase64 = canvas.toDataURL('image/jpeg', 0.65);
+    const canvas = drawToCanvas(img, 600, 600);
+    compressedBase64 = canvas.toDataURL('image/jpeg', 0.70);
     compressedSize = Math.round((compressedBase64.length * 3) / 4);
   }
   
