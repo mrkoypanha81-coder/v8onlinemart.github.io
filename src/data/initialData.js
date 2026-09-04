@@ -1,76 +1,8 @@
 // V8 Mini Mart - Initial Store & Inventory Data (Generated from store_db.json)
 
-export const INITIAL_CATEGORIES = [
-  {
-    "id": "all",
-    "name_en": "All Products",
-    "name_kh": "ទំនិញទាំងអស់",
-    "icon": "LayoutGrid",
-    "itemCount": 19
-  },
-  {
-    "id": "beverages",
-    "name_en": "Beverages & Drinks",
-    "name_kh": "ភេសជ្ជៈ & ទឹកផ្លែឈើ",
-    "icon": "Coffee",
-    "itemCount": 7
-  },
-  {
-    "id": "snacks",
-    "name_en": "Snacks & Confectionery",
-    "name_kh": "អាហារសម្រន់ & នំ",
-    "icon": "Cookie",
-    "itemCount": 5
-  },
-  {
-    "id": "grocery",
-    "name_en": "Groceries & Instant Food",
-    "name_kh": "គ្រឿងទេស & មីកញ្ចប់",
-    "icon": "ShoppingBag",
-    "itemCount": 4
-  },
-  {
-    "id": "personal_care",
-    "name_en": "Personal Care & Hygiene",
-    "name_kh": "សម្ភារៈបន្ទប់ទឹក & អនាម័យ",
-    "icon": "Sparkles",
-    "itemCount": 3
-  }
-];
+export const INITIAL_CATEGORIES = [];
 
 export const INITIAL_PRODUCTS = [
-  {
-    "title_en": "69+25+",
-    "title_kh": "87984",
-    "description_en": "",
-    "description_kh": "",
-    "sku": "V8-5516",
-    "currency": "USD",
-    "cost_price": 1.8,
-    "price": 2.5,
-    "original_price": null,
-    "has_discount": false,
-    "stock_quantity": 20,
-    "category_id": "beverages",
-    "category_name_en": "Beverages & Drinks",
-    "category_name_kh": "ភេសជ្ជៈ & ទឹកផ្លែឈើ",
-    "supplier_name": "Cambrew / Angkor Brewery",
-    "supplier_contact": "012 888 999",
-    "purchase_invoice_no": "INV-2026-892",
-    "expiry_date": "2027-02-21",
-    "mfg_date": "2026-08-25",
-    "batch_no": "LOT-2026-840",
-    "images": [
-      "./image prodacts/prod_1787638463339.jpg"
-    ],
-    "discount": 0,
-    "id": "PRD-4771797",
-    "rating": 5,
-    "review_count": 1,
-    "sold_count": 0,
-    "low_stock_threshold": 5,
-    "created_at": "2026-08-25T06:14:44.771Z"
-  },
   {
     "title_en": "Coke កូកា-កូឡា 330ml (Can កំប៉ុង)",
     "title_kh": "Coke កូកា-កូឡា 330ml (Can កំប៉ុង)",
@@ -82,7 +14,7 @@ export const INITIAL_PRODUCTS = [
     "price": 2000,
     "original_price": null,
     "has_discount": false,
-    "stock_quantity": 23,
+    "stock_quantity": 32,
     "category_id": "beverages",
     "category_name_en": "Beverages & Drinks",
     "category_name_kh": "ភេសជ្ជៈ & ទឹកផ្លែឈើ",
@@ -93,15 +25,18 @@ export const INITIAL_PRODUCTS = [
     "mfg_date": "2026-08-12",
     "batch_no": "LOT-2026-728",
     "images": [
-      "./image prodacts/prod_1786533645891.jpg"
+      "/image prodacts/prod_1786533645891.jpg"
     ],
     "discount": 0,
     "id": "PRD-2349836",
     "rating": 5,
     "review_count": 1,
-    "sold_count": 0,
+    "sold_count": 1,
     "low_stock_threshold": 5,
-    "created_at": "2026-08-12T11:22:42.349Z"
+    "created_at": "2026-08-12T11:22:42.349Z",
+    "is_clearance": false,
+    "is_slow_moving": false,
+    "is_promoted": false
   },
   {
     "title_en": "Provida 500ml (គិតជាកេះ)",
@@ -125,7 +60,7 @@ export const INITIAL_PRODUCTS = [
     "mfg_date": "2026-08-11",
     "batch_no": "LOT-2026-939",
     "images": [
-      "./image prodacts/prod_1786441231629.jpg"
+      "/image prodacts/prod_1786441231629.jpg"
     ],
     "discount": 0,
     "id": "PRD-2735963",
@@ -133,7 +68,10 @@ export const INITIAL_PRODUCTS = [
     "review_count": 1,
     "sold_count": 3,
     "low_stock_threshold": 5,
-    "created_at": "2026-08-11T09:42:42.735Z"
+    "created_at": "2026-08-11T09:42:42.735Z",
+    "is_clearance": false,
+    "is_slow_moving": false,
+    "is_promoted": false
   },
   {
     "id": "PRD-1001",
@@ -148,14 +86,14 @@ export const INITIAL_PRODUCTS = [
     "price": 18000,
     "original_price": null,
     "discount": 0,
-    "stock_quantity": 5,
+    "stock_quantity": 3,
     "low_stock_threshold": 5,
     "images": [
-      "./image prodacts/prod_1786443580578.jpg"
+      "/image prodacts/prod_1786443580578.jpg"
     ],
     "rating": 4.9,
     "review_count": 320,
-    "sold_count": 1429,
+    "sold_count": 1431,
     "is_featured": true,
     "created_at": "2026-08-01T08:00:00Z",
     "cost_price": 15000,
@@ -166,7 +104,10 @@ export const INITIAL_PRODUCTS = [
     "purchase_invoice_no": "",
     "expiry_date": "2027-01-01",
     "mfg_date": "2026-08-11",
-    "batch_no": null
+    "batch_no": null,
+    "is_clearance": false,
+    "is_slow_moving": false,
+    "is_promoted": false
   },
   {
     "id": "PRD-1002",
@@ -181,14 +122,14 @@ export const INITIAL_PRODUCTS = [
     "price": 2000,
     "original_price": null,
     "discount": 0,
-    "stock_quantity": 22,
+    "stock_quantity": 18,
     "low_stock_threshold": 5,
     "images": [
-      "./image prodacts/prod_1786448782287.jpg"
+      "/image prodacts/prod_1786448782287.jpg"
     ],
     "rating": 4.8,
     "review_count": 185,
-    "sold_count": 983,
+    "sold_count": 987,
     "is_featured": true,
     "created_at": "2026-08-02T09:30:00Z",
     "cost_price": 1500,
@@ -199,7 +140,10 @@ export const INITIAL_PRODUCTS = [
     "purchase_invoice_no": "",
     "expiry_date": "2027-08-11",
     "mfg_date": null,
-    "batch_no": null
+    "batch_no": null,
+    "is_clearance": false,
+    "is_slow_moving": false,
+    "is_promoted": false
   },
   {
     "id": "PRD-1003",
@@ -217,7 +161,7 @@ export const INITIAL_PRODUCTS = [
     "stock_quantity": 8,
     "low_stock_threshold": 5,
     "images": [
-      "./image prodacts/prod_1786446440795.jpg"
+      "/image prodacts/prod_1786446440795.jpg"
     ],
     "rating": 4.9,
     "review_count": 94,
@@ -250,7 +194,7 @@ export const INITIAL_PRODUCTS = [
     "stock_quantity": 9,
     "low_stock_threshold": 5,
     "images": [
-      "./image prodacts/prod_1786446724702.jpg"
+      "/image prodacts/prod_1786446724702.jpg"
     ],
     "rating": 4.7,
     "review_count": 140,
@@ -280,14 +224,14 @@ export const INITIAL_PRODUCTS = [
     "price": 5000,
     "original_price": null,
     "discount": 0,
-    "stock_quantity": 6,
+    "stock_quantity": 5,
     "low_stock_threshold": 5,
     "images": [
-      "./image prodacts/prod_1786448030680.jpg"
+      "/image prodacts/prod_1786448030680.jpg"
     ],
     "rating": 4.9,
     "review_count": 210,
-    "sold_count": 426,
+    "sold_count": 427,
     "is_featured": true,
     "created_at": "2026-08-04T10:00:00Z",
     "cost_price": 4500,
@@ -348,7 +292,10 @@ export const INITIAL_PRODUCTS = [
     "sold_count": 490,
     "is_featured": false,
     "created_at": "2026-08-05T09:00:00Z",
-    "cost_price": 1.47
+    "cost_price": 1.47,
+    "is_clearance": false,
+    "is_slow_moving": false,
+    "is_promoted": false
   },
   {
     "id": "PRD-1008",
@@ -388,14 +335,14 @@ export const INITIAL_PRODUCTS = [
     "price": 3.2,
     "original_price": 3.8,
     "discount": 15,
-    "stock_quantity": 16,
+    "stock_quantity": 14,
     "low_stock_threshold": 5,
     "images": [
       "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&auto=format&fit=crop&q=80"
     ],
     "rating": 4.9,
     "review_count": 142,
-    "sold_count": 820,
+    "sold_count": 822,
     "is_featured": true,
     "created_at": "2026-08-05T14:30:00Z",
     "cost_price": 2.24
@@ -488,17 +435,20 @@ export const INITIAL_PRODUCTS = [
     "price": 4.9,
     "original_price": 5.5,
     "discount": 11,
-    "stock_quantity": 18,
+    "stock_quantity": 17,
     "low_stock_threshold": 5,
     "images": [
       "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=600&auto=format&fit=crop&q=80"
     ],
     "rating": 4.7,
     "review_count": 44,
-    "sold_count": 210,
+    "sold_count": 211,
     "is_featured": false,
     "created_at": "2026-08-07T08:30:00Z",
-    "cost_price": 3.43
+    "cost_price": 3.43,
+    "is_clearance": true,
+    "is_slow_moving": true,
+    "is_promoted": true
   },
   {
     "id": "PRD-1014",
@@ -513,17 +463,20 @@ export const INITIAL_PRODUCTS = [
     "price": 5.4,
     "original_price": 6.2,
     "discount": 13,
-    "stock_quantity": 25,
+    "stock_quantity": 20,
     "low_stock_threshold": 5,
     "images": [
       "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=600&auto=format&fit=crop&q=80"
     ],
     "rating": 4.8,
     "review_count": 92,
-    "sold_count": 410,
+    "sold_count": 415,
     "is_featured": false,
     "created_at": "2026-08-07T11:00:00Z",
-    "cost_price": 3.78
+    "cost_price": 3.78,
+    "is_clearance": true,
+    "is_slow_moving": true,
+    "is_promoted": true
   },
   {
     "id": "PRD-1015",
@@ -548,7 +501,10 @@ export const INITIAL_PRODUCTS = [
     "sold_count": 584,
     "is_featured": false,
     "created_at": "2026-08-08T09:00:00Z",
-    "cost_price": 4.55
+    "cost_price": 4.55,
+    "is_clearance": true,
+    "is_slow_moving": true,
+    "is_promoted": true
   },
   {
     "id": "PRD-1016",
@@ -573,11 +529,453 @@ export const INITIAL_PRODUCTS = [
     "sold_count": 341,
     "is_featured": false,
     "created_at": "2026-08-08T14:00:00Z",
-    "cost_price": 1.75
+    "cost_price": 1.75,
+    "is_clearance": true,
+    "is_slow_moving": true,
+    "is_promoted": true
+  }
+];
+
+export const INITIAL_BANNERS = [
+  {
+    "id": "BAN-1",
+    "title_kh": "ទំនិញស្រស់ថ្មី & បញ្ចុះតម្លៃពិសេសហូតដល់ 20% រាល់ថ្ងៃ",
+    "title_en": "Daily Fresh Goods & Up to 20% OFF Daily Deals",
+    "subtitle_kh": "ទិញទំនិញប្រចាំថ្ងៃ ភេសជ្ជៈ អាហារសម្រន់ ដឹកជញ្ជូនរហ័សទាន់ចិត្តក្នុង ៣០ នាទី",
+    "subtitle_en": "Shop daily groceries, drinks, and snacks with express 30-min delivery",
+    "badge_kh": "បញ្ចុះតម្លៃ 20%",
+    "badge_en": "20% OFF DEAL",
+    "tag_kh": "⭐ V8 ពិសេសប្រចាំថ្ងៃ",
+    "tag_en": "⭐ V8 SPECIAL DEALS",
+    "image": "",
+    "gradient": "from-emerald-900 via-emerald-800 to-orange-700",
+    "link": "#categories",
+    "active": true
+  },
+  {
+    "id": "BAN-2",
+    "title_kh": "ទូទាត់រហ័សជាមួយ ABA KHQR គ្មានកម្រៃសេវា",
+    "title_en": "Instant ABA KHQR Payment With Zero Fee",
+    "subtitle_kh": "ស្កេនទូទាត់ភ្លាមៗជាមួយគ្រប់ App ធនាគារ (ABA, Wing, ACLEDA, Bakong)",
+    "subtitle_en": "Scan & pay instantly with any mobile banking app nationwide",
+    "badge_kh": "Free ដឹកជញ្ជូន > $20",
+    "badge_en": "FREE DELIVERY > $20",
+    "tag_kh": "💳 ទូទាត់ងាយស្រងាយស្រួលល",
+    "tag_en": "💳 EASY CHECKOUT",
+    "image": "",
+    "gradient": "from-slate-900 via-emerald-950 to-emerald-800",
+    "link": "#categories",
+    "active": false
   }
 ];
 
 export const INITIAL_ORDERS = [
+  {
+    "id": "ORD-2026-5750",
+    "customer_name": "Sokha Meng",
+    "customer_phone": "012 888 777",
+    "shipping_address": "No 45, Street 271, Sangkat Toul Tumpoung",
+    "city_province": "Phnom Penh",
+    "notes": "Please call before arrival",
+    "payment_method": "khqr",
+    "payment_status": "paid",
+    "subtotal": 4.9,
+    "shipping_fee": 0,
+    "total_amount": 4.9,
+    "is_in_borey_the_flora": true,
+    "delivery_remarks": "ដឹកជញ្ជូនឥតគិតថ្លៃ (ក្នុងបុរី The Flora)",
+    "status": "paid",
+    "created_at": "2026-09-03T09:15:12.097Z",
+    "order_items": [
+      {
+        "id": "ITEM-ORD-2026-5750-1",
+        "product_id": "PRD-1013",
+        "product_name": "ប្រេងផ្កាឈូករ័ត្នសុទ្ធ ១០០% (ចំណុះ ២លីត្រ)",
+        "product_image": "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=600&auto=format&fit=crop&q=80",
+        "sku": "V8-GRO-004",
+        "quantity": 1,
+        "cost_price": 3.43,
+        "unit_price": 4.9,
+        "total_price": 4.9
+      }
+    ]
+  },
+  {
+    "id": "ORD-2026-4026",
+    "customer_name": "Sokha Meng",
+    "customer_phone": "012 888 777",
+    "shipping_address": "No 45, Street 271, Sangkat Toul Tumpoung",
+    "city_province": "Phnom Penh",
+    "notes": "Please call before arrival",
+    "payment_method": "khqr",
+    "payment_status": "paid",
+    "subtotal": 10.8,
+    "shipping_fee": 0,
+    "total_amount": 10.8,
+    "is_in_borey_the_flora": true,
+    "delivery_remarks": "ដឹកជញ្ជូនឥតគិតថ្លៃ (ក្នុងបុរី The Flora)",
+    "status": "paid",
+    "created_at": "2026-09-03T09:14:26.755Z",
+    "order_items": [
+      {
+        "id": "ITEM-ORD-2026-4026-1",
+        "product_id": "PRD-1014",
+        "product_name": "សាប៊ូកក់សក់ សាន់ស៊ីល ���ណ៌ផ្កាឈូក (650ml)",
+        "product_image": "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=600&auto=format&fit=crop&q=80",
+        "sku": "V8-PER-001",
+        "quantity": 2,
+        "cost_price": 3.78,
+        "unit_price": 5.4,
+        "total_price": 10.8
+      }
+    ]
+  },
+  {
+    "id": "ORD-2026-6063",
+    "customer_name": "Sokha Meng",
+    "customer_phone": "012 888 777",
+    "shipping_address": "No 45, Street 271, Sangkat Toul Tumpoung",
+    "city_province": "Phnom Penh",
+    "notes": "Please call before arrival",
+    "payment_method": "khqr",
+    "payment_status": "paid",
+    "subtotal": 10.8,
+    "shipping_fee": 0,
+    "total_amount": 10.8,
+    "is_in_borey_the_flora": true,
+    "delivery_remarks": "ដឹកជញ្ជូនឥតគិតថ្លៃ (ក្នុងបុរី The Flora)",
+    "status": "paid",
+    "created_at": "2026-09-03T09:03:17.211Z",
+    "order_items": [
+      {
+        "id": "ITEM-ORD-2026-6063-1",
+        "product_id": "PRD-1014",
+        "product_name": "សាប៊ូកក់សក់ សាន់ស៊ីល ���ណ៌ផ្កាឈូក (650ml)",
+        "product_image": "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=600&auto=format&fit=crop&q=80",
+        "sku": "V8-PER-001",
+        "quantity": 2,
+        "cost_price": 3.78,
+        "unit_price": 5.4,
+        "total_price": 10.8
+      }
+    ]
+  },
+  {
+    "id": "ORD-2026-5655",
+    "customer_name": "Sokha Meng",
+    "customer_phone": "012 888 777",
+    "shipping_address": "No 45, Street 271, Sangkat Toul Tumpoung",
+    "city_province": "Phnom Penh",
+    "notes": "Please call before arrival",
+    "payment_method": "khqr",
+    "payment_status": "paid",
+    "subtotal": 5.4,
+    "shipping_fee": 0,
+    "total_amount": 5.4,
+    "is_in_borey_the_flora": true,
+    "delivery_remarks": "ដឹកជញ្ជូនឥតគិតថ្លៃ (ក្នុងបុរី The Flora)",
+    "status": "paid",
+    "created_at": "2026-09-03T08:57:44.816Z",
+    "order_items": [
+      {
+        "id": "ITEM-ORD-2026-5655-1",
+        "product_id": "PRD-1014",
+        "product_name": "សាប៊ូកក់សក់ សាន់ស៊ីល ���ណ៌ផ្កាឈូក (650ml)",
+        "product_image": "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=600&auto=format&fit=crop&q=80",
+        "sku": "V8-PER-001",
+        "quantity": 1,
+        "cost_price": 3.78,
+        "unit_price": 5.4,
+        "total_price": 5.4
+      }
+    ]
+  },
+  {
+    "id": "ORD-2026-7259",
+    "customer_name": "Sokha Meng",
+    "customer_phone": "012 888 777",
+    "shipping_address": "No 45, Street 271, Sangkat Toul Tumpoung",
+    "city_province": "Phnom Penh",
+    "notes": "Please call before arrival",
+    "payment_method": "khqr",
+    "payment_status": "paid",
+    "subtotal": 0.5,
+    "shipping_fee": 0,
+    "total_amount": 0.5,
+    "is_in_borey_the_flora": true,
+    "delivery_remarks": "ដឹកជញ្ជូនឥតគិតថ្លៃ (ក្នុងបុរី The Flora)",
+    "status": "paid",
+    "created_at": "2026-09-03T08:56:50.376Z",
+    "order_items": [
+      {
+        "id": "ITEM-ORD-2026-7259-1",
+        "product_id": "PRD-2349836",
+        "product_name": "Coke កូកា-កូឡា 330ml (Can កំប៉ុង)",
+        "product_image": "/image prodacts/prod_1786533645891.jpg",
+        "sku": "V8-6084",
+        "quantity": 1,
+        "cost_price": 0.375,
+        "unit_price": 0.5,
+        "total_price": 0.5
+      }
+    ]
+  },
+  {
+    "id": "ORD-2026-1618",
+    "customer_name": "Sokha MengTest Customer",
+    "customer_phone": "012 888 777012345678",
+    "shipping_address": "No 45, Street 271, Sangkat Toul TumpoFlora Street 5, House 123ung",
+    "city_province": "Phnom Penh",
+    "notes": "Please call before arrival",
+    "payment_method": "khqr",
+    "payment_status": "paid",
+    "subtotal": 3.2,
+    "shipping_fee": 0,
+    "total_amount": 3.2,
+    "is_in_borey_the_flora": true,
+    "delivery_remarks": "ដឹកជញ្ជូនឥតគិតថ្លៃ (ក្នុងបុរី The Flora)",
+    "status": "completed",
+    "created_at": "2026-09-03T07:07:38.543Z",
+    "order_items": [
+      {
+        "id": "ITEM-ORD-2026-1618-1",
+        "product_id": "PRD-1009",
+        "product_name": "នំសូកូឡា ឆូកូផាយ អូរីយ៉ុង (ប្រអប់ ១២ នំ)",
+        "product_image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&auto=format&fit=crop&q=80",
+        "sku": "V8-SNK-004",
+        "quantity": 1,
+        "cost_price": 2.24,
+        "unit_price": 3.2,
+        "total_price": 3.2
+      }
+    ],
+    "delivery_status": "delivered",
+    "delivered_at": "2026-09-03T07:17:52.682Z",
+    "delivery_confirmed_by": "admin",
+    "delivery_evidence_image": null,
+    "delivery_evidence_time": "2026-09-03T07:17:52.682Z"
+  },
+  {
+    "id": "ORD-2026-6784",
+    "customer_name": "Sokha Meng",
+    "customer_phone": "012 888 777",
+    "shipping_address": "No 45, Street 271, Sangkat Toul Tumpoung",
+    "city_province": "Phnom Penh",
+    "notes": "Please call before arrival",
+    "payment_method": "cod",
+    "payment_status": "paid",
+    "subtotal": 4.5,
+    "shipping_fee": 0,
+    "total_amount": 4.5,
+    "is_in_borey_the_flora": true,
+    "delivery_remarks": "ដឹកជញ្ជូនឥតគិតថ្លៃ (ក្នុងបុរី The Flora)",
+    "status": "completed",
+    "created_at": "2026-09-03T06:58:04.434Z",
+    "order_items": [
+      {
+        "id": "ITEM-ORD-2026-6784-1",
+        "product_id": "PRD-1001",
+        "product_name": "Provida 1.5L (គិតជាកេះ)",
+        "product_image": "/image prodacts/prod_1786443580578.jpg",
+        "sku": "V8-BEV-001",
+        "quantity": 1,
+        "cost_price": 3.75,
+        "unit_price": 4.5,
+        "total_price": 4.5
+      }
+    ],
+    "delivery_status": "delivered",
+    "delivered_at": "2026-09-03T06:59:13.632Z",
+    "delivery_confirmed_by": "admin",
+    "delivery_evidence_image": null,
+    "delivery_evidence_time": "2026-09-03T06:59:13.632Z"
+  },
+  {
+    "id": "ORD-2026-5375",
+    "customer_name": "Sokha Meng",
+    "customer_phone": "012 888 777",
+    "shipping_address": "No 45, Street 271, Sangkat Toul Tumpoung",
+    "city_province": "Phnom Penh",
+    "notes": "Please call before arrival",
+    "payment_method": "cod",
+    "payment_status": "paid",
+    "subtotal": 1.25,
+    "shipping_fee": 0,
+    "total_amount": 1.25,
+    "is_in_borey_the_flora": true,
+    "delivery_remarks": "ដឹកជញ្ជូនឥតគិតថ្លៃ (ក្នុងបុរី The Flora)",
+    "status": "completed",
+    "created_at": "2026-09-03T06:57:24.987Z",
+    "order_items": [
+      {
+        "id": "ITEM-ORD-2026-5375-1",
+        "product_id": "PRD-1005",
+        "product_name": "គ្រាប់ផ្កាឈូករត្ន័ (គិតជាកញ្ចប់)",
+        "product_image": "/image prodacts/prod_1786448030680.jpg",
+        "sku": "V8-BEV-005",
+        "quantity": 1,
+        "cost_price": 1.125,
+        "unit_price": 1.25,
+        "total_price": 1.25
+      }
+    ],
+    "delivery_status": "delivered",
+    "delivered_at": "2026-09-03T07:39:29.612Z",
+    "delivery_confirmed_by": "admin",
+    "delivery_evidence_image": null,
+    "delivery_evidence_time": "2026-09-03T07:39:29.612Z"
+  },
+  {
+    "id": "ORD-2026-2648",
+    "customer_name": "Sokha Meng",
+    "customer_phone": "012 888 777",
+    "shipping_address": "No 45, Street 271, Sangkat Toul Tumpoung",
+    "city_province": "Phnom Penh",
+    "notes": "Please call before arrival",
+    "payment_method": "khqr",
+    "payment_status": "paid",
+    "subtotal": 1,
+    "shipping_fee": 0,
+    "total_amount": 1,
+    "is_in_borey_the_flora": true,
+    "delivery_remarks": "ដឹកជញ្ជូនឥតគិតថ្លៃ (ក្នុងបុរី The Flora)",
+    "status": "completed",
+    "created_at": "2026-09-03T06:56:47.528Z",
+    "order_items": [
+      {
+        "id": "ITEM-ORD-2026-2648-1",
+        "product_id": "PRD-1002",
+        "product_name": "កូកា-កូឡា កំប៉ុង Coke (330ml x 1 កំប៉ុង)",
+        "product_image": "/image prodacts/prod_1786448782287.jpg",
+        "sku": "V8-BEV-002",
+        "quantity": 2,
+        "cost_price": 0.375,
+        "unit_price": 0.5,
+        "total_price": 1
+      }
+    ],
+    "delivery_status": "delivered",
+    "delivered_at": "2026-09-03T07:39:33.291Z",
+    "delivery_confirmed_by": "admin",
+    "delivery_evidence_image": null,
+    "delivery_evidence_time": "2026-09-03T07:39:33.291Z"
+  },
+  {
+    "id": "ORD-2026-2396",
+    "customer_name": "Sokha Meng",
+    "customer_phone": "012 888 777",
+    "shipping_address": "No 45, Street 271, Sangkat Toul Tumpoung",
+    "city_province": "Phnom Penh",
+    "notes": "Please call before arrival",
+    "payment_method": "khqr",
+    "payment_status": "paid",
+    "subtotal": 0.5,
+    "shipping_fee": 0,
+    "total_amount": 0.5,
+    "is_in_borey_the_flora": true,
+    "delivery_remarks": "ដឹកជញ្ជូនឥតគិតថ្លៃ (ក្នុងបុរី The Flora)",
+    "status": "completed",
+    "created_at": "2026-09-03T06:49:26.205Z",
+    "order_items": [
+      {
+        "id": "ITEM-ORD-2026-2396-1",
+        "product_id": "PRD-1002",
+        "product_name": "កូកា-កូឡា កំប៉ុង Coke (330ml x 1 កំប៉ុង)",
+        "product_image": "/image prodacts/prod_1786448782287.jpg",
+        "sku": "V8-BEV-002",
+        "quantity": 1,
+        "cost_price": 0.375,
+        "unit_price": 0.5,
+        "total_price": 0.5
+      }
+    ],
+    "delivery_status": "delivered",
+    "delivered_at": "2026-09-03T08:19:30.926Z",
+    "delivery_confirmed_by": "admin",
+    "delivery_evidence_image": null,
+    "delivery_evidence_time": "2026-09-03T08:19:30.926Z"
+  },
+  {
+    "id": "ORD-2026-5022",
+    "customer_name": "Sokha Meng",
+    "customer_phone": "012345678",
+    "shipping_address": "No 45, Street 271, Sangkat Toul Tumpoung",
+    "city_province": "Phnom Penh",
+    "notes": "Please call before arrival",
+    "payment_method": "khqr",
+    "payment_status": "paid",
+    "subtotal": 4.5,
+    "shipping_fee": 0,
+    "total_amount": 4.5,
+    "is_in_borey_the_flora": true,
+    "delivery_remarks": "ដឹកជញ្ជូនឥតគិតថ្លៃ (ក្នុងបុរី The Flora)",
+    "status": "completed",
+    "created_at": "2026-09-03T05:35:23.690Z",
+    "order_items": [
+      {
+        "id": "ITEM-ORD-2026-5022-1",
+        "product_id": "PRD-1001",
+        "product_name": "Provida 1.5L (គិតជាកេះ)",
+        "product_image": "/image prodacts/prod_1786443580578.jpg",
+        "sku": "V8-BEV-001",
+        "quantity": 1,
+        "cost_price": 3.75,
+        "unit_price": 4.5,
+        "total_price": 4.5
+      }
+    ],
+    "delivery_status": "delivered",
+    "delivered_at": "2026-09-03T06:19:22.952Z",
+    "delivery_confirmed_by": "customer",
+    "delivery_evidence_image": null,
+    "delivery_evidence_time": "2026-09-03T06:19:22.952Z"
+  },
+  {
+    "id": "ORD-2026-9878",
+    "customer_name": "Sokha Meng",
+    "customer_phone": "012345678",
+    "shipping_address": "No 45, Street 271, Sangkat Toul Tumpoung",
+    "city_province": "Phnom Penh",
+    "notes": "Please call before arrival",
+    "payment_method": "khqr",
+    "payment_status": "paid",
+    "subtotal": 3.7,
+    "shipping_fee": 0,
+    "total_amount": 3.7,
+    "is_in_borey_the_flora": true,
+    "delivery_remarks": "ដឹកជញ្ជូនឥតគិតថ្លៃ (ក្នុងបុរី The Flora)",
+    "status": "completed",
+    "created_at": "2026-09-03T05:26:04.079Z",
+    "order_items": [
+      {
+        "id": "ITEM-ORD-2026-9878-1",
+        "product_id": "PRD-1009",
+        "product_name": "នំសូកូឡា ឆូកូផាយ អូរីយ៉ុង (ប្រអប់ ១២ នំ)",
+        "product_image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&auto=format&fit=crop&q=80",
+        "sku": "V8-SNK-004",
+        "quantity": 1,
+        "cost_price": 2.24,
+        "unit_price": 3.2,
+        "total_price": 3.2
+      },
+      {
+        "id": "ITEM-ORD-2026-9878-2",
+        "product_id": "PRD-1002",
+        "product_name": "កូកា-កូឡា កំប៉ុង Coke (330ml x 1 កំប៉ុង)",
+        "product_image": "/image prodacts/prod_1786448782287.jpg",
+        "sku": "V8-BEV-002",
+        "quantity": 1,
+        "cost_price": 0.375,
+        "unit_price": 0.5,
+        "total_price": 0.5
+      }
+    ],
+    "delivery_status": "delivered",
+    "delivered_at": "2026-09-03T07:39:44.819Z",
+    "delivery_confirmed_by": "admin",
+    "delivery_evidence_image": null,
+    "delivery_evidence_time": "2026-09-03T07:39:44.819Z"
+  },
   {
     "id": "ORD-2026-7009",
     "customer_name": "បញ្ញា",
@@ -599,7 +997,7 @@ export const INITIAL_ORDERS = [
         "id": "ITEM-ORD-2026-7009-1",
         "product_id": "PRD-1001",
         "product_name": "Provida 1.5L (គិតជាកេះ)",
-        "product_image": "./image prodacts/prod_1786443580578.jpg",
+        "product_image": "/image prodacts/prod_1786443580578.jpg",
         "sku": "V8-BEV-001",
         "quantity": 1,
         "cost_price": 3.75,
@@ -610,7 +1008,7 @@ export const INITIAL_ORDERS = [
         "id": "ITEM-ORD-2026-7009-2",
         "product_id": "PRD-1005",
         "product_name": "គ្រាប់ផ្កាឈូករត្ន័ (គិតជាកញ្ចប់)",
-        "product_image": "./image prodacts/prod_1786448030680.jpg",
+        "product_image": "/image prodacts/prod_1786448030680.jpg",
         "sku": "V8-BEV-005",
         "quantity": 1,
         "cost_price": 1.125,
@@ -621,7 +1019,7 @@ export const INITIAL_ORDERS = [
         "id": "ITEM-ORD-2026-7009-3",
         "product_id": "PRD-2735963",
         "product_name": "Provida 500ml (គិតជាកេះ)",
-        "product_image": "./image prodacts/prod_1786441231629.jpg",
+        "product_image": "/image prodacts/prod_1786441231629.jpg",
         "sku": "V8-8731",
         "quantity": 1,
         "cost_price": 2.75,
@@ -629,7 +1027,7 @@ export const INITIAL_ORDERS = [
         "total_price": 3.5
       }
     ],
-    "delivery_evidence_image": "./image delivery/delivery_ORD-2026-7009_1786601906140.jpg",
+    "delivery_evidence_image": "/image delivery/delivery_ORD-2026-7009_1786601906140.jpg",
     "delivery_evidence_time": "2026-08-13T06:18:26.386Z",
     "delivery_status": "delivered",
     "delivered_at": "2026-08-13T06:18:29.910Z",
@@ -649,14 +1047,14 @@ export const INITIAL_ORDERS = [
     "total_amount": 8.25,
     "is_in_borey_the_flora": true,
     "delivery_remarks": "ដឹកជញ្ជូនឥតគិតថ្លៃ (ក្នុងបុរី The Flora)",
-    "status": "paid",
+    "status": "completed",
     "created_at": "2026-08-12T13:10:14.641Z",
     "order_items": [
       {
         "id": "ITEM-ORD-2026-9061-1",
         "product_id": "PRD-1005",
         "product_name": "គ្រាប់ផ្កាឈូករត្ន័ (គិតជាកញ្ចប់)",
-        "product_image": "./image prodacts/prod_1786448030680.jpg",
+        "product_image": "/image prodacts/prod_1786448030680.jpg",
         "sku": "V8-BEV-005",
         "quantity": 1,
         "cost_price": 1.125,
@@ -667,7 +1065,7 @@ export const INITIAL_ORDERS = [
         "id": "ITEM-ORD-2026-9061-2",
         "product_id": "PRD-2735963",
         "product_name": "Provida 500ml (គិតជាកេះ)",
-        "product_image": "./image prodacts/prod_1786441231629.jpg",
+        "product_image": "/image prodacts/prod_1786441231629.jpg",
         "sku": "V8-8731",
         "quantity": 1,
         "cost_price": 2.75,
@@ -678,14 +1076,19 @@ export const INITIAL_ORDERS = [
         "id": "ITEM-ORD-2026-9061-3",
         "product_id": "PRD-1003",
         "product_name": "ទឹកសុទ្ធ កម្ពូជា Cambodia 500ml (គិតជាកេះ)",
-        "product_image": "./image prodacts/prod_1786446440795.jpg",
+        "product_image": "/image prodacts/prod_1786446440795.jpg",
         "sku": "V8-BEV-003",
         "quantity": 1,
         "cost_price": 2.75,
         "unit_price": 3.5,
         "total_price": 3.5
       }
-    ]
+    ],
+    "delivery_status": "delivered",
+    "delivered_at": "2026-09-03T08:19:41.730Z",
+    "delivery_confirmed_by": "admin",
+    "delivery_evidence_image": null,
+    "delivery_evidence_time": "2026-09-03T08:19:41.730Z"
   },
   {
     "id": "ORD-2026-9900",
@@ -708,7 +1111,7 @@ export const INITIAL_ORDERS = [
         "id": "ITEM-ORD-2026-9900-1",
         "product_id": "PRD-1001",
         "product_name": "Provida 1.5L (គិតជាកេះ)",
-        "product_image": "./image prodacts/prod_1786443580578.jpg",
+        "product_image": "/image prodacts/prod_1786443580578.jpg",
         "sku": "V8-BEV-001",
         "quantity": 1,
         "cost_price": 3.75,
@@ -719,7 +1122,7 @@ export const INITIAL_ORDERS = [
         "id": "ITEM-ORD-2026-9900-2",
         "product_id": "PRD-1005",
         "product_name": "គ្រាប់ផ្កាឈូករត្ន័ (គិតជាកញ្ចប់)",
-        "product_image": "./image prodacts/prod_1786448030680.jpg",
+        "product_image": "/image prodacts/prod_1786448030680.jpg",
         "sku": "V8-BEV-005",
         "quantity": 1,
         "cost_price": 1.125,
@@ -727,7 +1130,7 @@ export const INITIAL_ORDERS = [
         "total_price": 1.25
       }
     ],
-    "delivery_evidence_image": "./image delivery/delivery_ORD-2026-9900_1786532180567.jpg",
+    "delivery_evidence_image": "/image delivery/delivery_ORD-2026-9900_1786532180567.jpg",
     "delivery_evidence_time": "2026-08-12T10:56:20.860Z",
     "delivery_status": "delivered",
     "delivered_at": "2026-08-12T10:56:24.987Z",
@@ -754,7 +1157,7 @@ export const INITIAL_ORDERS = [
         "id": "ITEM-ORD-2026-3224-1",
         "product_id": "PRD-1001",
         "product_name": "Provida 1.5L (គិតជាកេះ)",
-        "product_image": "./image prodacts/prod_1786443580578.jpg",
+        "product_image": "/image prodacts/prod_1786443580578.jpg",
         "sku": "V8-BEV-001",
         "quantity": 1,
         "cost_price": 3.75,
@@ -762,7 +1165,7 @@ export const INITIAL_ORDERS = [
         "total_price": 4.5
       }
     ],
-    "delivery_evidence_image": "./image delivery/delivery_ORD-2026-3224_1786530619988.jpg",
+    "delivery_evidence_image": "/image delivery/delivery_ORD-2026-3224_1786530619988.jpg",
     "delivery_evidence_time": "2026-08-12T10:30:20.355Z",
     "delivery_status": "delivered",
     "delivered_at": "2026-08-12T10:30:25.309Z",
@@ -789,7 +1192,7 @@ export const INITIAL_ORDERS = [
         "id": "ITEM-ORD-2026-2682-1",
         "product_id": "PRD-1002",
         "product_name": "កូកា-កូឡា កំប៉ុង Coke (330ml x 1 កំប៉ុង)",
-        "product_image": "./image prodacts/prod_1786448782287.jpg",
+        "product_image": "/image prodacts/prod_1786448782287.jpg",
         "sku": "V8-BEV-002",
         "quantity": 1,
         "cost_price": 0.375,
@@ -800,7 +1203,7 @@ export const INITIAL_ORDERS = [
         "id": "ITEM-ORD-2026-2682-2",
         "product_id": "PRD-1005",
         "product_name": "គ្រាប់ផ្កាឈូករត្ន័ (គិតជាកញ្ចប់)",
-        "product_image": "./image prodacts/prod_1786448030680.jpg",
+        "product_image": "/image prodacts/prod_1786448030680.jpg",
         "sku": "V8-BEV-005",
         "quantity": 1,
         "cost_price": 1.125,
@@ -835,7 +1238,7 @@ export const INITIAL_ORDERS = [
         "id": "ITEM-ORD-2026-8200-1",
         "product_id": "PRD-1001",
         "product_name": "Provida 1.5L (គិតជាកេះ)",
-        "product_image": "./image prodacts/prod_1786443580578.jpg",
+        "product_image": "/image prodacts/prod_1786443580578.jpg",
         "sku": "V8-BEV-001",
         "quantity": 1,
         "cost_price": 3.75,
@@ -843,7 +1246,7 @@ export const INITIAL_ORDERS = [
         "total_price": 4.5
       }
     ],
-    "delivery_evidence_image": "./image delivery/delivery_ORD-2026-8200_1786532243064.jpg",
+    "delivery_evidence_image": "/image delivery/delivery_ORD-2026-8200_1786532243064.jpg",
     "delivery_evidence_time": "2026-08-12T10:57:23.479Z",
     "delivery_status": "delivered",
     "delivered_at": "2026-08-12T10:57:25.837Z",
@@ -905,7 +1308,7 @@ export const INITIAL_ORDERS = [
         "id": "ITEM-ORD-2026-1897-1",
         "product_id": "PRD-1002",
         "product_name": "កូកា-កូឡា កំប៉ុង Coke (330ml x 1 កំប៉ុង)",
-        "product_image": "./image prodacts/prod_1786448782287.jpg",
+        "product_image": "/image prodacts/prod_1786448782287.jpg",
         "sku": "V8-BEV-002",
         "quantity": 1,
         "cost_price": 0.375,
@@ -940,7 +1343,7 @@ export const INITIAL_ORDERS = [
         "id": "ITEM-ORD-2026-5136-1",
         "product_id": "PRD-1001",
         "product_name": "Provida 1.5L (គិតជាកេះ)",
-        "product_image": "./image prodacts/prod_1786443580578.jpg",
+        "product_image": "/image prodacts/prod_1786443580578.jpg",
         "sku": "V8-BEV-001",
         "quantity": 2,
         "cost_price": 3.75,
@@ -975,7 +1378,7 @@ export const INITIAL_ORDERS = [
         "id": "ITEM-ORD-2026-8709-1",
         "product_id": "PRD-1001",
         "product_name": "Provida 1.5L (គិតជាកេះ)",
-        "product_image": "./image prodacts/prod_1786443580578.jpg",
+        "product_image": "/image prodacts/prod_1786443580578.jpg",
         "sku": "V8-BEV-001",
         "quantity": 1,
         "cost_price": 3.75,
@@ -1148,7 +1551,7 @@ export const INITIAL_ORDERS = [
         "id": "ITEM-ORD-2026-1333-1",
         "product_id": "PRD-1003",
         "product_name": "ទឹកសុទ្ធ កម្ពូជា Cambodia 500ml (គិតជាកេះ)",
-        "product_image": "./image prodacts/prod_1786446440795.jpg",
+        "product_image": "/image prodacts/prod_1786446440795.jpg",
         "sku": "V8-BEV-003",
         "quantity": 1,
         "cost_price": 2.75,
@@ -1159,7 +1562,7 @@ export const INITIAL_ORDERS = [
         "id": "ITEM-ORD-2026-1333-2",
         "product_id": "PRD-1004",
         "product_name": "ទឹកសុទ្ធ 1.5L",
-        "product_image": "./image prodacts/prod_1786446724702.jpg",
+        "product_image": "/image prodacts/prod_1786446724702.jpg",
         "sku": "V8-BEV-004",
         "quantity": 1,
         "cost_price": 3.75,
@@ -1203,7 +1606,7 @@ export const INITIAL_ORDERS = [
         "id": "ITEM-ORD-2026-6844-1",
         "product_id": "PRD-1001",
         "product_name": "Provida 1.5L (គិតជាកេះ)",
-        "product_image": "./image prodacts/prod_1786443580578.jpg",
+        "product_image": "/image prodacts/prod_1786443580578.jpg",
         "sku": "V8-BEV-001",
         "quantity": 1,
         "cost_price": 3.75,
@@ -1265,7 +1668,7 @@ export const INITIAL_ORDERS = [
         "id": "ITEM-ORD-2026-2126-1",
         "product_id": "PRD-2735963",
         "product_name": "Provida 500ml (គិតជាកេះ)",
-        "product_image": "./image prodacts/prod_1786441231629.jpg",
+        "product_image": "/image prodacts/prod_1786441231629.jpg",
         "sku": "V8-8731",
         "quantity": 1,
         "cost_price": 2.75,
@@ -1438,170 +1841,6 @@ export const INITIAL_ORDERS = [
   }
 ];
 
-export const INITIAL_BANNERS = [
-  {
-    "id": "BAN-1",
-    "title_kh": "ទំនិញស្រស់ថ្មី & បញ្ចុះតម្លៃពិសេសហូតដល់ 20% រាល់ថ្ងៃ",
-    "title_en": "Daily Fresh Goods & Up to 20% OFF Daily Deals",
-    "subtitle_kh": "ទិញទំនិញប្រចាំថ្ងៃ ភេសជ្ជៈ អាហារសម្រន់ ដឹកជញ្ជូនរហ័សទាន់ចិត្តក្នុង ៣០ នាទី",
-    "subtitle_en": "Shop daily groceries, drinks, and snacks with express 30-min delivery",
-    "badge_kh": "បញ្ចុះតម្លៃ 20%",
-    "badge_en": "20% OFF DEAL",
-    "tag_kh": "⭐ V8 ពិសេសប្រចាំថ្ងៃ",
-    "tag_en": "⭐ V8 SPECIAL DEALS",
-    "image": "",
-    "gradient": "from-emerald-900 via-emerald-800 to-orange-700",
-    "link": "#categories",
-    "active": true
-  },
-  {
-    "id": "BAN-2",
-    "title_kh": "ទូទាត់រហ័សជាមួយ ABA KHQR គ្មានកម្រៃសេវា",
-    "title_en": "Instant ABA KHQR Payment With Zero Fee",
-    "subtitle_kh": "ស្កេនទូទាត់ភ្លាមៗជាមួយគ្រប់ App ធនាគារ (ABA, Wing, ACLEDA, Bakong)",
-    "subtitle_en": "Scan & pay instantly with any mobile banking app nationwide",
-    "badge_kh": "Free ដឹកជញ្ជូន > $20",
-    "badge_en": "FREE DELIVERY > $20",
-    "tag_kh": "💳 ទូទាត់ងាយស្រងាយស្រួលល",
-    "tag_en": "💳 EASY CHECKOUT",
-    "image": "",
-    "gradient": "from-slate-900 via-emerald-950 to-emerald-800",
-    "link": "#categories",
-    "active": false
-  }
-];
-
-export const INITIAL_WALLET_TRANSACTIONS = [
-  {
-    "id": "WTX-1786958940927",
-    "customerPhone": "012 888 777",
-    "customerName": "Sokha Meng",
-    "type": "purchase",
-    "amount": 3.3,
-    "direction": "debit",
-    "balanceAfter": 6.7,
-    "paymentMethod": "v8_wallet",
-    "titleKh": "ទូទាត់ការបញ្ជាទិញ ",
-    "titleEn": "Order Payment ",
-    "description": "Express Mart Grocery Items",
-    "orderId": null,
-    "date": "2026-08-17T09:29:00.927Z",
-    "status": "completed"
-  },
-  {
-    "id": "WTX-1786958708108",
-    "customerPhone": "012 888 777",
-    "customerName": "Sokha Meng",
-    "type": "deposit",
-    "amount": 10,
-    "direction": "credit",
-    "balanceAfter": 10,
-    "paymentMethod": "aba_khqr",
-    "titleKh": "ដាក់លុយចូល (ABA KHQR)",
-    "titleEn": "Deposit via ABA KHQR",
-    "description": "Recharged V8 Wallet credit",
-    "orderId": null,
-    "date": "2026-08-17T09:25:08.108Z",
-    "status": "completed"
-  },
-  {
-    "id": "WTX-1786531863290",
-    "customerPhone": "010828282",
-    "customerName": "Vibol",
-    "type": "deposit",
-    "amount": 50,
-    "direction": "credit",
-    "balanceAfter": 85,
-    "paymentMethod": "aba_khqr",
-    "titleKh": "ដាក់លុយចូល (ABA KHQR)",
-    "titleEn": "Deposit via ABA KHQR",
-    "description": "Recharged V8 Wallet credit",
-    "orderId": null,
-    "date": "2026-08-12T10:51:03.290Z",
-    "status": "completed"
-  },
-  {
-    "id": "WTX-901",
-    "customerPhone": "010828282",
-    "customerName": "Vibol",
-    "type": "topup",
-    "amount": 20,
-    "direction": "credit",
-    "balanceAfter": 35,
-    "paymentMethod": "cash",
-    "titleKh": "Admin បញ្ចូលទឹកប្រាក់ (សាច់ប្រាក់នៅហាង)",
-    "titleEn": "Admin Top Up (Cash at Mart)",
-    "description": "Mart Manager recharge at counter",
-    "orderId": null,
-    "date": "2026-08-12T09:18:00Z",
-    "status": "completed"
-  },
-  {
-    "id": "WTX-902",
-    "customerPhone": "010828282",
-    "customerName": "Vibol",
-    "type": "purchase",
-    "amount": 12.5,
-    "direction": "debit",
-    "balanceAfter": 15,
-    "paymentMethod": "v8_wallet",
-    "titleKh": "ទូទាត់ការបញ្ជាទិញ #ORD-9832",
-    "titleEn": "Order Payment #ORD-9832",
-    "description": "Express Grocery Delivery (Borey The Flora)",
-    "orderId": "ORD-9832",
-    "date": "2026-08-12T05:22:00Z",
-    "status": "completed"
-  },
-  {
-    "id": "WTX-903",
-    "customerPhone": "010828282",
-    "customerName": "Vibol",
-    "type": "deposit",
-    "amount": 20,
-    "direction": "credit",
-    "balanceAfter": 27.5,
-    "paymentMethod": "aba_khqr",
-    "titleKh": "ដាក់លុយតាម ABA KHQR",
-    "titleEn": "Deposit via ABA KHQR",
-    "description": "Instant Mobile KHQR Recharge",
-    "orderId": null,
-    "date": "2026-08-12T05:19:00Z",
-    "status": "completed"
-  },
-  {
-    "id": "WTX-904",
-    "customerPhone": "010828282",
-    "customerName": "Vibol",
-    "type": "purchase",
-    "amount": 7.5,
-    "direction": "debit",
-    "balanceAfter": 7.5,
-    "paymentMethod": "v8_wallet",
-    "titleKh": "ទូទាត់ការបញ្ជាទិញ #ORD-9829",
-    "titleEn": "Order Payment #ORD-9829",
-    "description": "Snacks & Drinks Mart Items",
-    "orderId": "ORD-9829",
-    "date": "2026-08-10T14:30:00Z",
-    "status": "completed"
-  },
-  {
-    "id": "WTX-905",
-    "customerPhone": "010828282",
-    "customerName": "Vibol",
-    "type": "bonus",
-    "amount": 15,
-    "direction": "credit",
-    "balanceAfter": 15,
-    "paymentMethod": "bonus",
-    "titleKh": "ប្រាក់រង្វាន់ស្វាគមន៍សមាជិកថ្មី (Welcome Bonus)",
-    "titleEn": "New Member Welcome Credit",
-    "description": "Free $15.00 Starter Credit",
-    "orderId": null,
-    "date": "2026-08-08T08:00:00Z",
-    "status": "completed"
-  }
-];
-
 export const INITIAL_REGISTERED_CUSTOMERS = [
   {
     "isRegistered": true,
@@ -1699,3 +1938,5 @@ export const INITIAL_REGISTERED_CUSTOMERS = [
     "password": "8888"
   }
 ];
+
+export const INITIAL_WALLET_TRANSACTIONS = [];

@@ -2296,6 +2296,7 @@ const safeSetItem = (key, value) => {
       id: `PRD-${Date.now().toString().slice(-4)}${Math.floor(100 + Math.random() * 900)}`,
       cost_price: parseFloat(newProduct.cost_price) || 0,
       price: parseFloat(newProduct.price) || 0,
+      images: Array.isArray(newProduct.images) ? newProduct.images.map(resolveAssetUrl) : [],
       rating: 5.0,
       review_count: 1,
       sold_count: 0,
@@ -2315,6 +2316,7 @@ const safeSetItem = (key, value) => {
       ...updatedProduct,
       cost_price: parseFloat(updatedProduct.cost_price) || 0,
       price: parseFloat(updatedProduct.price) || 0,
+      images: Array.isArray(updatedProduct.images) ? updatedProduct.images.map(resolveAssetUrl) : []
     };
     setProducts(prev => prev.map(p => p.id === cleanedProduct.id ? cleanedProduct : p));
     showToast(
